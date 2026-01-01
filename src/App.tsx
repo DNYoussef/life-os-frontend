@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import { CLIBridge } from './components/CLIBridge'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://life-os-dashboard-production.up.railway.app';
 
@@ -95,11 +96,15 @@ function App() {
           )}
           {lastUpdated && <p className="last-updated">Last updated: {lastUpdated.toLocaleTimeString()}</p>}
         </section>
+        <section className="cli-section">
+          <h2>CLI Bridge</h2>
+          <p className="section-subtitle">Route AI requests to Claude, Gemini, or OpenAI</p>
+          <CLIBridge apiBase={API_BASE} />
+        </section>
         <section className="features-section">
           <h2>Coming Soon</h2>
           <div className="features-grid">
             <div className="feature-card"><h3>Task Management</h3><p>Create and track scheduled tasks</p></div>
-            <div className="feature-card"><h3>CLI Bridge</h3><p>Route AI requests to Claude, Gemini, or Codex</p></div>
             <div className="feature-card"><h3>MCP Discovery</h3><p>Toggle and manage MCP servers</p></div>
             <div className="feature-card"><h3>Expertise System</h3><p>Accumulate patterns over time</p></div>
           </div>
