@@ -411,3 +411,354 @@ body {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Evidence Viewer Styles */
+.evidence-section, .consensus-section {
+  margin-bottom: 3rem;
+}
+
+.evidence-section h2, .consensus-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.evidence-viewer {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.evidence-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--bg-card);
+}
+
+.evidence-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.evidence-filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.evidence-filter-select {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--bg-card);
+  border-radius: 6px;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.evidence-refresh-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.evidence-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.evidence-item {
+  padding: 1rem;
+  border-bottom: 1px solid var(--bg-card);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.evidence-item:hover, .evidence-item.selected {
+  background: var(--bg-card);
+}
+
+.evidence-item-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.evidence-type {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--bg-card);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.evidence-title {
+  flex: 1;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.evidence-confidence {
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.evidence-item-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.evidence-description {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.evidence-empty, .evidence-loading, .evidence-error {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.evidence-error {
+  color: var(--error);
+}
+
+.run-summary {
+  padding: 1rem;
+  background: var(--bg-card);
+  border-top: 1px solid var(--bg-secondary);
+}
+
+.run-summary h4 {
+  margin: 0 0 1rem;
+  color: var(--text-primary);
+}
+
+.run-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.run-summary-stat {
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.confidence-dist {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+}
+
+.dist-high { color: #22c55e; }
+.dist-medium { color: #eab308; }
+.dist-low { color: #ef4444; }
+
+/* Consensus Display Styles */
+.consensus-display {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.consensus-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--bg-card);
+}
+
+.consensus-header h3 {
+  margin: 0 0 0.75rem;
+  color: var(--text-primary);
+}
+
+.model-status-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.model-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.model-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.consensus-input {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.consensus-type-select {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--bg-card);
+  border-radius: 6px;
+  padding: 0.5rem;
+  width: fit-content;
+}
+
+.consensus-textarea {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--bg-card);
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.consensus-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.consensus-run-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.consensus-run-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.consensus-error {
+  margin: 0 1rem 1rem;
+  padding: 0.75rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--error);
+  border-radius: 6px;
+  color: var(--error);
+}
+
+.consensus-result {
+  padding: 1rem;
+  border-top: 1px solid var(--bg-card);
+}
+
+.consensus-summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.consensus-status {
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.consensus-stats {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.model-responses {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.model-response {
+  background: var(--bg-card);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.model-response.failed {
+  opacity: 0.7;
+}
+
+.model-response-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--bg-secondary);
+}
+
+.model-name {
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: capitalize;
+}
+
+.model-confidence {
+  color: var(--success);
+  font-size: 0.85rem;
+}
+
+.model-time {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.model-error {
+  color: var(--error);
+  font-size: 0.85rem;
+}
+
+.model-response-body {
+  padding: 0.75rem 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.model-response-body pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.error-text, .no-response {
+  color: var(--text-secondary);
+  font-style: italic;
+}

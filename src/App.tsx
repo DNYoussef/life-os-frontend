@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { CLIBridge } from './components/CLIBridge'
+import { EvidenceViewer } from './components/EvidenceViewer'
+import { ConsensusDisplay } from './components/ConsensusDisplay'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://life-os-dashboard-production.up.railway.app';
 
@@ -96,11 +98,23 @@ function App() {
           )}
           {lastUpdated && <p className="last-updated">Last updated: {lastUpdated.toLocaleTimeString()}</p>}
         </section>
+        <section className="consensus-section">
+          <h2>Multi-Model Consensus</h2>
+          <p className="section-subtitle">Run prompts through Claude, Gemini, and Codex for consensus validation</p>
+          <ConsensusDisplay apiBase={API_BASE} />
+        </section>
+
         <section className="cli-section">
           <h2>CLI Bridge</h2>
           <p className="section-subtitle">Route AI requests to Claude, Gemini, or OpenAI</p>
           <CLIBridge apiBase={API_BASE} />
         </section>
+        <section className="evidence-section">
+          <h2>Evidence Trail</h2>
+          <p className="section-subtitle">Visual proof and audit records for observable learning</p>
+          <EvidenceViewer apiBase={API_BASE} />
+        </section>
+
         <section className="features-section">
           <h2>Coming Soon</h2>
           <div className="features-grid">
