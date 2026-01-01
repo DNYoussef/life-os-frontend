@@ -3,6 +3,7 @@ import './App.css'
 import { CLIBridge } from './components/CLIBridge'
 import { EvidenceViewer } from './components/EvidenceViewer'
 import { ConsensusDisplay } from './components/ConsensusDisplay'
+import { SimpleAskAI } from './components/SimpleAskAI/SimpleAskAI'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://life-os-dashboard-production.up.railway.app';
 
@@ -127,6 +128,9 @@ function App() {
       <footer className="footer">
         <p>Life OS Integration Project</p>
       </footer>
+
+      {/* Floating AI Chat Widget - Available on all pages */}
+      <SimpleAskAI apiBase={API_BASE} />
     </div>
   )
 }
