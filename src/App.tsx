@@ -3,7 +3,7 @@ import './App.css'
 import { CLIBridge } from './components/CLIBridge'
 import { EvidenceViewer } from './components/EvidenceViewer'
 import { ConsensusDisplay } from './components/ConsensusDisplay'
-import { SimpleAskAI } from './components/SimpleAskAI/SimpleAskAI'
+// SimpleAskAI removed - Phase 0: Kill floating widget
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://life-os-dashboard-production.up.railway.app';
 
@@ -88,7 +88,12 @@ function App() {
         <section className="status-section">
           <h2>System Status</h2>
           {loading ? (
-            <div className="loading">Loading...</div>
+            <div className="status-grid">
+              <div className="status-card skeleton"><div className="skeleton-line"></div><div className="skeleton-line short"></div></div>
+              <div className="status-card skeleton"><div className="skeleton-line"></div><div className="skeleton-line short"></div></div>
+              <div className="status-card skeleton"><div className="skeleton-line"></div><div className="skeleton-line short"></div></div>
+              <div className="status-card skeleton"><div className="skeleton-line"></div><div className="skeleton-line short"></div></div>
+            </div>
           ) : (
             <div className="status-grid">
               <StatusCard title="Backend API" status={liveness?.alive ? 'connected' : 'disconnected'} subtitle={`v${health?.version || '?'}`} />
@@ -129,8 +134,7 @@ function App() {
         <p>Life OS Integration Project</p>
       </footer>
 
-      {/* Floating AI Chat Widget - Available on all pages */}
-      <SimpleAskAI apiBase={API_BASE} />
+      {/* Floating widget removed - Phase 0: Reduce cognitive load */}
     </div>
   )
 }

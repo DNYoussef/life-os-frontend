@@ -213,8 +213,11 @@ export function CLIBridge({ apiBase }: CLIBridgeProps) {
       </div>
 
       {error && (
-        <div className="cli-error">
-          {error}
+        <div className="error-with-retry">
+          <span className="error-message">{error}</span>
+          <button className="retry-btn" onClick={() => { setError(null); sendMessage(); }}>
+            Retry
+          </button>
         </div>
       )}
 

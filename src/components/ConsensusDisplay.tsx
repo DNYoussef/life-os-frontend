@@ -148,7 +148,12 @@ export function ConsensusDisplay({ apiBase }: ConsensusDisplayProps) {
       </div>
 
       {error && (
-        <div className="consensus-error">{error}</div>
+        <div className="error-with-retry">
+          <span className="error-message">{error}</span>
+          <button className="retry-btn" onClick={() => { setError(null); runConsensus(); }}>
+            Retry
+          </button>
+        </div>
       )}
 
       {result && (

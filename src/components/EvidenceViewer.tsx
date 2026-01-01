@@ -134,9 +134,18 @@ export function EvidenceViewer({ apiBase }: EvidenceViewerProps) {
       </div>
 
       {loading ? (
-        <div className="evidence-loading">Loading evidence...</div>
+        <div className="evidence-list">
+          <div className="evidence-item skeleton"><div className="skeleton-line"></div><div className="skeleton-line short"></div></div>
+          <div className="evidence-item skeleton"><div className="skeleton-line"></div><div className="skeleton-line short"></div></div>
+          <div className="evidence-item skeleton"><div className="skeleton-line"></div><div className="skeleton-line short"></div></div>
+        </div>
       ) : error ? (
-        <div className="evidence-error">{error}</div>
+        <div className="error-with-retry">
+          <span className="error-message">{error}</span>
+          <button className="retry-btn" onClick={() => { setError(null); fetchEvidence(); }}>
+            Retry
+          </button>
+        </div>
       ) : evidence.length === 0 ? (
         <div className="evidence-empty">No evidence collected yet</div>
       ) : (
