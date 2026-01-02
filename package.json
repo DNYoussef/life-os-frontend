@@ -11,7 +11,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "serve dist -l $PORT"
+    "start": "serve dist -s -l $PORT"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.16",
