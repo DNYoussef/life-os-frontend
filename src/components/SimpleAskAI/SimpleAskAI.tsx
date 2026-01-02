@@ -67,7 +67,7 @@ export const SimpleAskAI: React.FC<SimpleAskAIProps> = ({ apiBase }) => {
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
-        const response = await fetch(`${API_BASE}/api/v1/simple/suggestions`);
+        const response = await fetch(`${API_BASE}/api/v1/simple/suggestions/`);
         if (response.ok) {
           const data = await response.json();
           setSuggestions(data.suggestions || []);
@@ -79,7 +79,7 @@ export const SimpleAskAI: React.FC<SimpleAskAIProps> = ({ apiBase }) => {
 
     const fetchStatus = async () => {
       try {
-        const response = await fetch(`${API_BASE}/api/v1/simple/status`);
+        const response = await fetch(`${API_BASE}/api/v1/simple/status/`);
         if (response.ok) {
           const data = await response.json();
           setStatus(data);
@@ -108,7 +108,7 @@ export const SimpleAskAI: React.FC<SimpleAskAIProps> = ({ apiBase }) => {
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE}/api/v1/simple/ask`, {
+      const response = await fetch(`${API_BASE}/api/v1/simple/ask/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

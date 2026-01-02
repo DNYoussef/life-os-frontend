@@ -44,7 +44,7 @@ export function CLIBridge({ apiBase }: CLIBridgeProps) {
 
   const fetchProviders = async () => {
     try {
-      const response = await fetch(`${apiBase}/api/v1/cli/providers`);
+      const response = await fetch(`${apiBase}/api/v1/cli/providers/`);
       if (response.ok) {
         const data = await response.json();
         setProviders(data.providers);
@@ -70,7 +70,7 @@ export function CLIBridge({ apiBase }: CLIBridgeProps) {
     setError(null);
 
     try {
-      const response = await fetch(`${apiBase}/api/v1/cli/send`, {
+      const response = await fetch(`${apiBase}/api/v1/cli/send/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

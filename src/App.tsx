@@ -47,8 +47,8 @@ function App() {
     try {
       setError(null);
       const [healthRes, livenessRes] = await Promise.all([
-        fetch(`${API_BASE}/api/v1/health`),
-        fetch(`${API_BASE}/api/v1/liveness`)
+        fetch(`${API_BASE}/api/v1/health/`),
+        fetch(`${API_BASE}/api/v1/liveness/`)
       ]);
       if (healthRes.ok) {
         const healthData = await healthRes.json();
@@ -122,11 +122,24 @@ function App() {
         </section>
 
         <section className="features-section">
-          <h2>Coming Soon</h2>
+          <h2>Available APIs</h2>
+          <p className="section-subtitle">Backend endpoints ready for integration</p>
           <div className="features-grid">
-            <div className="feature-card"><h3>Task Management</h3><p>Create and track scheduled tasks</p></div>
-            <div className="feature-card"><h3>MCP Discovery</h3><p>Toggle and manage MCP servers</p></div>
-            <div className="feature-card"><h3>Expertise System</h3><p>Accumulate patterns over time</p></div>
+            <a href={`${API_BASE}/api/docs#/tasks`} target="_blank" rel="noopener noreferrer" className="feature-card clickable">
+              <h3>Task Management</h3>
+              <p>Create and track scheduled tasks</p>
+              <span className="api-badge">API Ready</span>
+            </a>
+            <a href={`${API_BASE}/api/docs#/agents`} target="_blank" rel="noopener noreferrer" className="feature-card clickable">
+              <h3>Agent Registry</h3>
+              <p>Track agent activity and metrics</p>
+              <span className="api-badge">API Ready</span>
+            </a>
+            <a href={`${API_BASE}/api/docs#/projects`} target="_blank" rel="noopener noreferrer" className="feature-card clickable">
+              <h3>Project Management</h3>
+              <p>Organize tasks into projects</p>
+              <span className="api-badge">API Ready</span>
+            </a>
           </div>
         </section>
       </main>

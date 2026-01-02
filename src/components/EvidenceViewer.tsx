@@ -48,7 +48,9 @@ export function EvidenceViewer({ apiBase }: EvidenceViewerProps) {
       if (filter.category) params.append('category', filter.category);
       if (filter.confidence_level) params.append('confidence_level', filter.confidence_level);
 
-      const response = await fetch(`${apiBase}/api/v1/evidence?${params}`);
+      const queryString = params.toString();
+      const url = queryString ? `${apiBase}/api/v1/evidence/?${queryString}` : `${apiBase}/api/v1/evidence/`;
+      const response = await fetch(url);
       if (!response.ok) throw new Error('Failed to fetch evidence');
 
       const data = await response.json();
@@ -62,7 +64,7 @@ export function EvidenceViewer({ apiBase }: EvidenceViewerProps) {
 
   const fetchRunSummary = async (runId: string) => {
     try {
-      const response = await fetch(`${apiBase}/api/v1/evidence/run/${runId}/summary`);
+      const response = await fetch(`${apiBase}/api/v1/evidence/run/${runId}/summary/`);
       if (!response.ok) throw new Error('Failed to fetch run summary');
 
       const data = await response.json();

@@ -44,7 +44,7 @@ export function ConsensusDisplay({ apiBase }: ConsensusDisplayProps) {
 
   const fetchModels = async () => {
     try {
-      const response = await fetch(`${apiBase}/api/v1/consensus/models`);
+      const response = await fetch(`${apiBase}/api/v1/consensus/models/`);
       if (!response.ok) throw new Error('Failed to fetch models');
       const data = await response.json();
       setModels(data.models || []);
@@ -61,7 +61,7 @@ export function ConsensusDisplay({ apiBase }: ConsensusDisplayProps) {
     setResult(null);
 
     try {
-      const response = await fetch(`${apiBase}/api/v1/consensus/run`, {
+      const response = await fetch(`${apiBase}/api/v1/consensus/run/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
