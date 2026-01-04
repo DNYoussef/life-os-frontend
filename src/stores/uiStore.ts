@@ -68,9 +68,19 @@ export const useKanbanStore = create<KanbanState>((set, get) => ({
       const columns = organizeTasksByColumn(tasks);
       set({ columns, isLoading: false });
     } catch (error) {
-      set({ 
+      // Use demo data on error (consistent with list view fallback)
+      const demoTasks: Task[] = [
+        { id: '1', name: 'Morning Brief', skill_name: 'cascade-orchestrator', cron_expression: '0 6 * * *', status: 'pending', kanban_status: 'todo', next_run_at: new Date().toISOString(), last_run_at: null, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: '2', name: 'DB Backup', skill_name: 'backup-runner', cron_expression: '0 0 * * *', status: 'completed', kanban_status: 'done', next_run_at: new Date().toISOString(), last_run_at: new Date().toISOString(), created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: '3', name: 'Health Sync', skill_name: 'health-tracker', cron_expression: '*/30 * * * *', status: 'running', kanban_status: 'in_progress', next_run_at: new Date().toISOString(), last_run_at: new Date().toISOString(), created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: '4', name: 'Code Review', skill_name: 'code-reviewer', cron_expression: '0 9 * * 1-5', status: 'pending', kanban_status: 'in_review', next_run_at: new Date().toISOString(), last_run_at: null, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: '5', name: 'Weekly Report', skill_name: 'report-generator', cron_expression: '0 17 * * 5', status: 'failed', kanban_status: 'cancelled', next_run_at: new Date().toISOString(), last_run_at: new Date().toISOString(), created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+      ];
+      const columns = organizeTasksByColumn(demoTasks);
+      set({
+        columns,
         error: error instanceof Error ? error.message : 'Failed to fetch tasks',
-        isLoading: false 
+        isLoading: false
       });
     }
   },
