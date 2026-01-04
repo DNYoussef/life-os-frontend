@@ -26,36 +26,6 @@ interface DesignStageProps {
   onSubmit: (data: DesignStageInput) => Promise<StageOutput | undefined>;
 }
 
-// Default color palette keys
-const DEFAULT_COLOR_KEYS = [
-  'primary',
-  'secondary',
-  'accent',
-  'background',
-  'surface',
-  'text',
-  'text-muted',
-  'border',
-  'error',
-  'success',
-  'warning',
-];
-
-// Default typography keys
-const DEFAULT_TYPOGRAPHY_KEYS = [
-  'font-family',
-  'font-family-mono',
-  'font-size-base',
-  'font-size-sm',
-  'font-size-lg',
-  'font-size-xl',
-  'font-size-2xl',
-  'line-height',
-  'font-weight-normal',
-  'font-weight-medium',
-  'font-weight-bold',
-];
-
 // Shell pattern options
 const SHELL_PATTERNS = [
   { value: 'sidebar-content', label: 'Sidebar + Content', description: 'Fixed sidebar with scrollable content area' },

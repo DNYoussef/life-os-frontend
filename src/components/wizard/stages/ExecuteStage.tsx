@@ -17,7 +17,6 @@ import {
   Bot,
   Terminal,
   GripVertical,
-  Plus,
   RefreshCw,
   Trophy,
   Target,

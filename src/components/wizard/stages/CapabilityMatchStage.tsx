@@ -10,7 +10,6 @@ import {
   Loader2,
   AlertTriangle,
   Check,
-  X,
   Search,
   RefreshCw,
   ChevronDown,
@@ -20,7 +19,6 @@ import {
   Terminal,
   HelpCircle,
   ExternalLink,
-  Filter,
   Sparkles,
 } from 'lucide-react';
 import type { StageOutput, CapabilityMatch, TaskCapabilityMapping } from '../../../types/wizard';

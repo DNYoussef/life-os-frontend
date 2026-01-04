@@ -164,12 +164,14 @@ export function canAccessStage(currentStage: WizardStage, targetStage: WizardSta
     'execute',
   ];
 
-  const currentIndex = stageOrder.indexOf(currentStage);
-  const targetIndex = stageOrder.indexOf(targetStage);
+  const currentIdx = stageOrder.indexOf(currentStage);
+  const targetIdx = stageOrder.indexOf(targetStage);
 
   // Can access current stage and all previous stages
   // For demo/testing, allow navigating to ANY stage to test components
-  // In production, change this to: return targetIndex <= currentIndex;
+  // In production, change this to: return targetIdx <= currentIdx;
+  void currentIdx; // Suppress unused warning (used in production logic)
+  void targetIdx;  // Suppress unused warning (used in production logic)
   return true; // Allow all stages for demo/testing
 }
 

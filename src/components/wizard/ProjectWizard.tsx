@@ -614,6 +614,9 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
                 projectId={projectId}
                 lastOutput={currentStageState.lastOutput}
                 isProcessing={currentStageState.isProcessing}
+                onSubmit={async (data) => {
+                  return handleProcessStage('execute', data);
+                }}
                 onComplete={() => onComplete?.(project)}
               />
             )}

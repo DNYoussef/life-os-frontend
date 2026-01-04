@@ -546,9 +546,11 @@ export function SectionsStage({
   const [sectionId, setSectionId] = useState<string>(
     initialData?.section_id || ''
   );
-  const [userFlows, setUserFlows] = useState<UserFlow[]>(
-    (initialData?.user_flows as UserFlow[]) || []
-  );
+  const [userFlows, setUserFlows] = useState<UserFlow[]>(() => {
+    if (!initialData?.user_flows) return [];
+    // Safely convert the user_flows data to UserFlow[]
+    return (initialData.user_flows as unknown as UserFlow[]) || [];
+  });
   const [uiRequirements, setUiRequirements] = useState<string[]>(
     initialData?.ui_requirements || []
   );
