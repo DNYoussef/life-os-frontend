@@ -7,6 +7,7 @@ import { ConsensusDisplay } from './components/ConsensusDisplay'
 import { TasksPage } from './pages/TasksPage'
 import { AgentsPage } from './pages/AgentsPage'
 import { ProjectsPage } from './pages/ProjectsPage'
+import { WizardPage } from './pages/WizardPage'
 import { SimpleAskAI } from './components/SimpleAskAI/SimpleAskAI'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://life-os-dashboard-production.up.railway.app';
@@ -49,6 +50,7 @@ function Navigation() {
     { path: '/tasks', label: 'Tasks' },
     { path: '/agents', label: 'Agents' },
     { path: '/projects', label: 'Projects' },
+    { path: '/wizard', label: 'Wizard' },
   ];
 
   return (
@@ -150,6 +152,11 @@ function HomePage() {
             <p>Organize tasks into projects with progress tracking</p>
             <span className="api-badge live">Live</span>
           </Link>
+          <Link to="/wizard" className="feature-card clickable">
+            <h3>Project Wizard</h3>
+            <p>7-stage Design OS workflow with Ralph Wiggum quality gates</p>
+            <span className="api-badge live">Live</span>
+          </Link>
         </div>
       </section>
 
@@ -174,28 +181,39 @@ function HomePage() {
   );
 }
 
+// App content wrapper to conditionally show/hide elements based on route
+function AppContent() {
+  const location = useLocation();
+  const isWizardPage = location.pathname === '/wizard';
+
+  return (
+    <div className="app">
+      <header className="header">
+        <h1>Life OS Dashboard</h1>
+        <p className="subtitle">Integration Hub for Context Cascade + Memory MCP</p>
+        <Navigation />
+      </header>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/tasks" element={<TasksPage />} />
+        <Route path="/agents" element={<AgentsPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/wizard" element={<WizardPage />} />
+      </Routes>
+      <footer className="footer">
+        <p>Life OS Integration Project</p>
+      </footer>
+
+      {/* Floating AI Chat Widget - Hidden on wizard page */}
+      {!isWizardPage && <SimpleAskAI apiBase={API_BASE} />}
+    </div>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
-      <div className="app">
-        <header className="header">
-          <h1>Life OS Dashboard</h1>
-          <p className="subtitle">Integration Hub for Context Cascade + Memory MCP</p>
-          <Navigation />
-        </header>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/tasks" element={<TasksPage />} />
-          <Route path="/agents" element={<AgentsPage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-        </Routes>
-        <footer className="footer">
-          <p>Life OS Integration Project</p>
-        </footer>
-
-        {/* Floating AI Chat Widget - Available on all pages */}
-        <SimpleAskAI apiBase={API_BASE} />
-      </div>
+      <AppContent />
     </BrowserRouter>
   )
 }
