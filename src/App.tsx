@@ -7,6 +7,7 @@ import { ConsensusDisplay } from './components/ConsensusDisplay'
 import { TasksPage } from './pages/TasksPage'
 import { AgentsPage } from './pages/AgentsPage'
 import { ProjectsPage } from './pages/ProjectsPage'
+import { SimpleAskAI } from './components/SimpleAskAI/SimpleAskAI'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://life-os-dashboard-production.up.railway.app';
 
@@ -191,6 +192,9 @@ function App() {
         <footer className="footer">
           <p>Life OS Integration Project</p>
         </footer>
+
+        {/* Floating AI Chat Widget - Available on all pages */}
+        <SimpleAskAI apiBase={API_BASE} />
       </div>
     </BrowserRouter>
   )
