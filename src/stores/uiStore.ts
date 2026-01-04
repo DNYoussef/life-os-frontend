@@ -77,11 +77,8 @@ export const useKanbanStore = create<KanbanState>((set, get) => ({
         { id: '5', name: 'Weekly Report', skill_name: 'report-generator', cron_expression: '0 17 * * 5', status: 'failed', kanban_status: 'cancelled', next_run_at: new Date().toISOString(), last_run_at: new Date().toISOString(), created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
       ];
       const columns = organizeTasksByColumn(demoTasks);
-      set({
-        columns,
-        error: error instanceof Error ? error.message : 'Failed to fetch tasks',
-        isLoading: false
-      });
+      // Don't set error - demo data is shown instead
+      set({ columns, isLoading: false });
     }
   },
 
