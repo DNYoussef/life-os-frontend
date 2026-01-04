@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Plus, Play, Pencil, Trash2, Clock, RefreshCw, X, Search } from 'lucide-react';
+import { Plus, Play, Pencil, Trash2, Clock, RefreshCw, X, Search, LayoutGrid, List } from 'lucide-react';
 import type { Task, TaskStatus, CreateTaskRequest } from '../types';
 import { getTasks, createTask, deleteTask, runTask } from '../services/api';
+import { KanbanBoard } from '../components/kanban';
 
 // Status Badge Component
 function StatusBadge({ status }: { status: TaskStatus }) {
@@ -116,6 +117,7 @@ export function TasksPage() {
   const [error, setError] = useState<string | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<'list' | 'kanban'>('kanban');
 
   const fetchTasks = async () => {
     try {
@@ -198,16 +200,35 @@ export function TasksPage() {
           <h1 className="text-2xl font-bold">Task Management</h1>
           <p className="text-slate-400 text-sm">Manage scheduled tasks and automations</p>
         </div>
-        <button
-          onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-colors"
-        >
-          <Plus size={18} />
-          Create Task
-        </button>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center bg-slate-900 border border-slate-700 rounded-lg p-1">
+            <button
+              onClick={() => setViewMode('kanban')}
+              className={viewMode === 'kanban' ? 'p-2 rounded-md bg-cyan-600 text-white' : 'p-2 rounded-md text-slate-400 hover:text-slate-200'}
+              title="Kanban View"
+            >
+              <LayoutGrid size={18} />
+            </button>
+            <button
+              onClick={() => setViewMode('list')}
+              className={viewMode === 'list' ? 'p-2 rounded-md bg-cyan-600 text-white' : 'p-2 rounded-md text-slate-400 hover:text-slate-200'}
+              title="List View"
+            >
+              <List size={18} />
+            </button>
+          </div>
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-colors"
+          >
+            <Plus size={18} />
+            Create Task
+          </button>
+        </div>
       </div>
 
-      {/* Search and Filters */}
+      {/* Search and Filters - Only show for list view */}
+      {viewMode === 'list' && (
       <div className="flex gap-4 mb-6">
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
@@ -227,6 +248,7 @@ export function TasksPage() {
           Refresh
         </button>
       </div>
+      )}
 
       {/* Error Banner */}
       {error && (
@@ -235,8 +257,22 @@ export function TasksPage() {
         </div>
       )}
 
-      {/* Tasks Table */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-lg overflow-hidden">
+      {/* Kanban View */}
+      {viewMode === 'kanban' && (
+        <KanbanBoard
+          onEditTask={(task) => console.log('Edit task:', task)}
+          onDeleteTask={handleDeleteTask}
+          onAddTask={(columnId) => {
+            console.log('Add task to column:', columnId);
+            setShowCreateModal(true);
+          }}
+        />
+      )}
+
+      {/* List View - Tasks Table */}
+      {viewMode === 'list' && (
+        <>
+          <div className="bg-slate-900/50 border border-slate-800 rounded-lg overflow-hidden">
         <table className="w-full">
           <thead className="bg-slate-900">
             <tr className="text-left text-sm text-slate-400 border-b border-slate-800">
@@ -306,15 +342,17 @@ export function TasksPage() {
             )}
           </tbody>
         </table>
-      </div>
+          </div>
 
-      {/* Stats Footer */}
-      <div className="flex gap-6 mt-6 text-sm text-slate-500">
-        <span>Total: {filteredTasks.length} tasks</span>
-        <span>Running: {filteredTasks.filter(t => t.status === 'running').length}</span>
-        <span>Pending: {filteredTasks.filter(t => t.status === 'pending').length}</span>
-        <span>Failed: {filteredTasks.filter(t => t.status === 'failed').length}</span>
-      </div>
+          {/* Stats Footer */}
+          <div className="flex gap-6 mt-6 text-sm text-slate-500">
+            <span>Total: {filteredTasks.length} tasks</span>
+            <span>Running: {filteredTasks.filter(t => t.status === 'running').length}</span>
+            <span>Pending: {filteredTasks.filter(t => t.status === 'pending').length}</span>
+            <span>Failed: {filteredTasks.filter(t => t.status === 'failed').length}</span>
+          </div>
+        </>
+      )}
 
       {/* Create Modal */}
       <CreateTaskModal
