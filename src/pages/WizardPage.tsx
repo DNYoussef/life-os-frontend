@@ -29,13 +29,13 @@ function StageProgress({ currentStage }: { currentStage: WizardStage }) {
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+      <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
         <div
-          className="h-full bg-cyan-500 rounded-full transition-all"
+          className="h-full bg-primary rounded-full transition-all"
           style={{ width: `${percentage}%` }}
         />
       </div>
-      <span className="text-xs text-slate-500 w-8">{percentage}%</span>
+      <span className="text-xs text-muted-foreground w-8">{percentage}%</span>
     </div>
   );
 }
@@ -54,36 +54,36 @@ function WizardProjectCard({
   return (
     <div
       onClick={onClick}
-      className="bg-slate-900/50 border border-slate-800 rounded-lg p-4 cursor-pointer hover:border-cyan-500/50 transition-colors group"
+      className="bg-card/50 border border-border rounded-lg p-4 cursor-pointer hover:border-primary/50 transition-colors group"
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           <div
             className={`
               w-10 h-10 rounded-lg flex items-center justify-center
-              ${isComplete ? 'bg-green-500/20 text-green-400' : 'bg-cyan-500/20 text-cyan-400'}
+              ${isComplete ? 'bg-success/20 text-success' : 'bg-primary/20 text-primary'}
             `}
           >
             {isComplete ? <CheckCircle2 size={20} /> : <Wand2 size={20} />}
           </div>
           <div>
-            <h3 className="font-medium text-slate-200 group-hover:text-cyan-400 transition-colors">
+            <h3 className="font-medium text-foreground group-hover:text-primary transition-colors">
               {project.name}
             </h3>
             {project.description && (
-              <p className="text-sm text-slate-500 line-clamp-1">{project.description}</p>
+              <p className="text-sm text-muted-foreground line-clamp-1">{project.description}</p>
             )}
           </div>
         </div>
-        <ChevronRight className="text-slate-600 group-hover:text-cyan-400 transition-colors" size={20} />
+        <ChevronRight className="text-muted-foreground group-hover:text-primary transition-colors" size={20} />
       </div>
 
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-slate-400">
-            Stage: <span className="text-slate-200">{currentStageInfo?.name}</span>
+          <span className="text-muted-foreground">
+            Stage: <span className="text-foreground">{currentStageInfo?.name}</span>
           </span>
-          <span className="text-slate-500 flex items-center gap-1">
+          <span className="text-muted-foreground flex items-center gap-1">
             <Clock size={12} />
             {new Date(project.updated_at).toLocaleDateString()}
           </span>
@@ -125,37 +125,37 @@ function CreateProjectModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-slate-900 border border-slate-700 rounded-lg p-6 w-full max-w-md">
+      <div className="bg-card border border-border rounded-lg p-6 w-full max-w-md">
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
-              <FolderPlus className="text-cyan-400" size={20} />
+            <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+              <FolderPlus className="text-primary" size={20} />
             </div>
-            <h2 className="text-xl font-bold text-slate-200">New Project Wizard</h2>
+            <h2 className="text-xl font-bold text-foreground">New Project Wizard</h2>
           </div>
           <button
             onClick={handleClose}
             disabled={isSubmitting}
-            className="text-slate-400 hover:text-slate-200 disabled:opacity-50"
+            className="text-muted-foreground hover:text-foreground disabled:opacity-50"
           >
             <X size={20} />
           </button>
         </div>
 
-        <p className="text-sm text-slate-400 mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           Start a new project with the 7-stage wizard. You'll define vision, roadmap, design, and more.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">
-              Project Name <span className="text-red-400">*</span>
+            <label className="block text-sm font-medium text-muted-foreground mb-1">
+              Project Name <span className="text-destructive">*</span>
             </label>
             <input
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-500"
+              className="w-full bg-muted border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:border-ring"
               placeholder="My SaaS Product"
               required
               disabled={isSubmitting}
@@ -163,13 +163,13 @@ function CreateProjectModal({
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">
+            <label className="block text-sm font-medium text-muted-foreground mb-1">
               Description (optional)
             </label>
             <textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-500 resize-none"
+              className="w-full bg-muted border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:border-ring resize-none"
               placeholder="A tool to help teams manage their tasks more effectively"
               rows={3}
               disabled={isSubmitting}
@@ -180,14 +180,14 @@ function CreateProjectModal({
               type="button"
               onClick={handleClose}
               disabled={isSubmitting}
-              className="px-4 py-2 rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 disabled:opacity-50"
+              className="px-4 py-2 rounded-lg border border-border text-muted-foreground hover:bg-muted disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting || !name.trim()}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-primary text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
@@ -287,7 +287,7 @@ export function WizardPage() {
   // If a project is active, show the wizard
   if (activeProjectId) {
     return (
-      <div className="h-screen overflow-hidden bg-slate-950">
+      <div className="h-screen overflow-hidden bg-background">
         <ProjectWizard
           projectId={activeProjectId}
           onClose={() => setActiveProjectId(null)}
@@ -301,21 +301,21 @@ export function WizardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 p-6">
+    <div className="min-h-screen bg-background text-foreground p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-3">
-            <Wand2 className="text-cyan-400" size={28} />
+            <Wand2 className="text-primary" size={28} />
             Project Wizard
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             Create projects with the 7-stage Design OS workflow
           </p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-primary text-white font-medium transition-colors"
         >
           <Plus size={18} />
           New Project
@@ -323,21 +323,21 @@ export function WizardPage() {
       </div>
 
       {/* Info Banner */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4 mb-6">
+      <div className="bg-card/50 border border-border rounded-lg p-4 mb-6">
         <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-            <Wand2 className="text-cyan-400" size={16} />
+          <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <Wand2 className="text-primary" size={16} />
           </div>
           <div>
-            <h3 className="font-medium text-slate-200 mb-1">7-Stage Workflow</h3>
-            <p className="text-sm text-slate-400">
-              Each project goes through: <span className="text-cyan-400">Vision</span> {'->'}{' '}
-              <span className="text-cyan-400">Roadmap</span> {'->'}{' '}
-              <span className="text-cyan-400">Design</span> {'->'}{' '}
-              <span className="text-cyan-400">Sections</span> {'->'}{' '}
-              <span className="text-cyan-400">Loop 1</span> {'->'}{' '}
-              <span className="text-cyan-400">Match</span> {'->'}{' '}
-              <span className="text-cyan-400">Execute</span>
+            <h3 className="font-medium text-foreground mb-1">7-Stage Workflow</h3>
+            <p className="text-sm text-muted-foreground">
+              Each project goes through: <span className="text-primary">Vision</span> {'->'}{' '}
+              <span className="text-primary">Roadmap</span> {'->'}{' '}
+              <span className="text-primary">Design</span> {'->'}{' '}
+              <span className="text-primary">Sections</span> {'->'}{' '}
+              <span className="text-primary">Loop 1</span> {'->'}{' '}
+              <span className="text-primary">Match</span> {'->'}{' '}
+              <span className="text-primary">Execute</span>
             </p>
           </div>
         </div>
@@ -346,18 +346,18 @@ export function WizardPage() {
       {/* Search */}
       <div className="flex gap-4 mb-6">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
           <input
             type="text"
             placeholder="Search wizard projects..."
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="w-full bg-card border border-border rounded-lg pl-10 pr-4 py-2 text-foreground focus:outline-none focus:border-ring"
           />
         </div>
         <button
           onClick={fetchProjects}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-muted-foreground hover:bg-muted transition-colors"
         >
           <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
           Refresh
@@ -366,27 +366,27 @@ export function WizardPage() {
 
       {/* Error Banner */}
       {error && (
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 mb-6 flex items-center gap-3">
-          <AlertCircle className="text-yellow-500 flex-shrink-0" size={20} />
-          <span className="text-yellow-400 text-sm">{error} (showing demo data)</span>
+        <div className="bg-warning/10 border border-warning/30 rounded-lg p-4 mb-6 flex items-center gap-3">
+          <AlertCircle className="text-warning flex-shrink-0" size={20} />
+          <span className="text-warning text-sm">{error} (showing demo data)</span>
         </div>
       )}
 
       {/* Projects Grid */}
       {loading ? (
         <div className="flex items-center justify-center py-12">
-          <RefreshCw className="animate-spin text-slate-500" size={24} />
+          <RefreshCw className="animate-spin text-muted-foreground" size={24} />
         </div>
       ) : filteredProjects.length === 0 ? (
         <div className="text-center py-12">
-          <Wand2 className="mx-auto text-slate-700 mb-4" size={48} />
-          <p className="text-slate-500 mb-4">
+          <Wand2 className="mx-auto text-muted mb-4" size={48} />
+          <p className="text-muted-foreground mb-4">
             {searchQuery ? 'No projects match your search.' : 'No wizard projects yet.'}
           </p>
           {!searchQuery && (
             <button
               onClick={() => setShowCreateModal(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-primary text-white font-medium"
             >
               <Plus size={18} />
               Create Your First Project

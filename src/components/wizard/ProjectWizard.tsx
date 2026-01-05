@@ -263,7 +263,7 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
-        <Loader2 className="animate-spin text-cyan-500" size={48} />
+        <Loader2 className="animate-spin text-primary" size={48} />
       </div>
     );
   }
@@ -272,11 +272,11 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
   if (error || !project) {
     return (
       <div className="flex flex-col items-center justify-center h-96 gap-4">
-        <AlertCircle className="text-red-500" size={48} />
-        <p className="text-red-400">{error || 'Project not found'}</p>
+        <AlertCircle className="text-destructive" size={48} />
+        <p className="text-destructive">{error || 'Project not found'}</p>
         <button
           onClick={loadProject}
-          className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200"
+          className="px-4 py-2 rounded-lg bg-muted hover:bg-muted text-foreground"
         >
           Retry
         </button>
@@ -294,13 +294,13 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
   const progressPercent = Math.round((completedStages / WIZARD_STAGES.length) * 100);
 
   return (
-    <div className="fixed inset-0 z-50 flex bg-slate-950 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex bg-background overflow-hidden">
       {/* LEFT SIDEBAR - Vertical Stepper */}
-      <aside className="w-64 flex-shrink-0 border-r border-slate-800 flex flex-col bg-slate-900 h-full overflow-hidden">
+      <aside className="w-64 flex-shrink-0 border-r border-border flex flex-col bg-card h-full overflow-hidden">
         {/* Project Info - Fixed at top */}
-        <div className="p-5 border-b border-slate-800 flex-shrink-0">
-          <h1 className="text-lg font-bold text-slate-200 truncate">{project.name}</h1>
-          <p className="text-sm text-slate-500 mt-1 line-clamp-2">{project.description || 'Project Wizard'}</p>
+        <div className="p-5 border-b border-border flex-shrink-0">
+          <h1 className="text-lg font-bold text-foreground truncate">{project.name}</h1>
+          <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{project.description || 'Project Wizard'}</p>
         </div>
 
         {/* Scrollable Section - Nav + Agents + MCP */}
@@ -321,7 +321,7 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
                     <div
                       className={`
                         absolute left-5 top-12 w-0.5 h-6
-                        ${status === 'completed' ? 'bg-green-500/50' : 'bg-slate-700'}
+                        ${status === 'completed' ? 'bg-green-500/50' : 'bg-muted'}
                       `}
                     />
                   )}
@@ -332,8 +332,8 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
                     disabled={!isClickable}
                     className={`
                       w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-all text-left
-                      ${isActive ? 'bg-cyan-500/20 ring-1 ring-cyan-500/50' : ''}
-                      ${isClickable && !isActive ? 'hover:bg-slate-800/50' : ''}
+                      ${isActive ? 'bg-primary/20 ring-1 ring-primary/50' : ''}
+                      ${isClickable && !isActive ? 'hover:bg-muted/50' : ''}
                       ${!isClickable ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                     `}
                   >
@@ -341,10 +341,10 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
                     <div
                       className={`
                         w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors
-                        ${status === 'completed' ? 'bg-green-500/20 text-green-400' : ''}
-                        ${status === 'current' ? 'bg-cyan-500/20 text-cyan-400' : ''}
-                        ${status === 'upcoming' ? 'bg-slate-800 text-slate-500' : ''}
-                        ${status === 'error' ? 'bg-red-500/20 text-red-400' : ''}
+                        ${status === 'completed' ? 'bg-success/20 text-success' : ''}
+                        ${status === 'current' ? 'bg-primary/20 text-primary' : ''}
+                        ${status === 'upcoming' ? 'bg-muted text-muted-foreground' : ''}
+                        ${status === 'error' ? 'bg-red-500/20 text-destructive' : ''}
                       `}
                     >
                       {status === 'completed' ? (
@@ -361,12 +361,12 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
                       <span
                         className={`
                           text-sm font-medium truncate leading-tight
-                          ${isActive ? 'text-cyan-400' : status === 'completed' ? 'text-green-400' : 'text-slate-300'}
+                          ${isActive ? 'text-primary' : status === 'completed' ? 'text-success' : 'text-foreground'}
                         `}
                       >
                         {stage.name}
                       </span>
-                      <span className="text-xs text-slate-500 truncate leading-tight mt-0.5">
+                      <span className="text-xs text-muted-foreground truncate leading-tight mt-0.5">
                         {status === 'completed' ? 'Completed' : status === 'current' ? 'In Progress' : `Step ${index + 1}`}
                       </span>
                     </div>
@@ -378,17 +378,17 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
           </nav>
 
           {/* Agents Section */}
-          <div className="border-t border-slate-800">
+          <div className="border-t border-border">
             <button
               onClick={() => setShowAgents(!showAgents)}
-              className="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-800/50 transition-colors"
+              className="w-full flex items-center justify-between px-4 py-3 hover:bg-muted/50 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Users size={16} className="text-cyan-400" />
-                <span className="text-sm font-medium text-slate-300">Agents</span>
-                <span className="text-xs bg-cyan-500/20 text-cyan-400 px-1.5 py-0.5 rounded">217</span>
+                <Users size={16} className="text-primary" />
+                <span className="text-sm font-medium text-foreground">Agents</span>
+                <span className="text-xs bg-primary/20 text-primary px-1.5 py-0.5 rounded">217</span>
               </div>
-              {showAgents ? <ChevronUp size={16} className="text-slate-500" /> : <ChevronDown size={16} className="text-slate-500" />}
+              {showAgents ? <ChevronUp size={16} className="text-muted-foreground" /> : <ChevronDown size={16} className="text-muted-foreground" />}
             </button>
             {showAgents && (
               <div className="px-2 pb-3">
@@ -397,12 +397,12 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
                   return (
                     <div
                       key={cat.id}
-                      className="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-slate-800/50 cursor-pointer group"
+                      className="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-muted/50 cursor-pointer group"
                       title={cat.description}
                     >
-                      <Icon size={14} className="text-slate-500 group-hover:text-cyan-400" />
-                      <span className="text-xs text-slate-400 group-hover:text-slate-300 flex-1 truncate">{cat.name}</span>
-                      <span className="text-xs text-slate-600">{cat.count}</span>
+                      <Icon size={14} className="text-muted-foreground group-hover:text-primary" />
+                      <span className="text-xs text-muted-foreground group-hover:text-foreground flex-1 truncate">{cat.name}</span>
+                      <span className="text-xs text-muted-foreground">{cat.count}</span>
                     </div>
                   );
                 })}
@@ -411,32 +411,32 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
           </div>
 
           {/* MCP Dashboard Section */}
-          <div className="border-t border-slate-800">
+          <div className="border-t border-border">
             <button
               onClick={() => setShowMcp(!showMcp)}
-              className="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-800/50 transition-colors"
+              className="w-full flex items-center justify-between px-4 py-3 hover:bg-muted/50 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Server size={16} className="text-green-400" />
-                <span className="text-sm font-medium text-slate-300">MCP Servers</span>
-                <span className="text-xs bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded">{MCP_SERVERS.length}</span>
+                <Server size={16} className="text-success" />
+                <span className="text-sm font-medium text-foreground">MCP Servers</span>
+                <span className="text-xs bg-success/20 text-success px-1.5 py-0.5 rounded">{MCP_SERVERS.length}</span>
               </div>
-              {showMcp ? <ChevronUp size={16} className="text-slate-500" /> : <ChevronDown size={16} className="text-slate-500" />}
+              {showMcp ? <ChevronUp size={16} className="text-muted-foreground" /> : <ChevronDown size={16} className="text-muted-foreground" />}
             </button>
             {showMcp && (
               <div className="px-2 pb-3">
                 {MCP_SERVERS.map((mcp) => (
                   <div
                     key={mcp.id}
-                    className="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-slate-800/50 cursor-pointer group"
+                    className="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-muted/50 cursor-pointer group"
                     title={mcp.description}
                   >
                     <Circle
                       size={8}
-                      className={mcp.status === 'active' ? 'text-green-400 fill-green-400' : 'text-slate-600 fill-slate-600'}
+                      className={mcp.status === 'active' ? 'text-success fill-green-400' : 'text-muted-foreground fill-muted-foreground'}
                     />
-                    <span className="text-xs text-slate-400 group-hover:text-slate-300 flex-1 truncate">{mcp.name}</span>
-                    <span className={`text-xs ${mcp.status === 'active' ? 'text-green-500' : 'text-slate-600'}`}>
+                    <span className="text-xs text-muted-foreground group-hover:text-foreground flex-1 truncate">{mcp.name}</span>
+                    <span className={`text-xs ${mcp.status === 'active' ? 'text-success' : 'text-muted-foreground'}`}>
                       {mcp.status}
                     </span>
                   </div>
@@ -445,7 +445,7 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
                   href="http://localhost:8765"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-2 py-1.5 mt-1 rounded bg-slate-800/50 hover:bg-slate-700/50 text-xs text-cyan-400 hover:text-cyan-300"
+                  className="flex items-center gap-2 px-2 py-1.5 mt-1 rounded bg-muted/50 hover:bg-muted/50 text-xs text-primary hover:text-primary"
                 >
                   <Settings size={12} />
                   Open MCP Dashboard
@@ -457,18 +457,18 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
         {/* End Scrollable Section */}
 
         {/* Progress Footer - Fixed at bottom */}
-        <div className="p-4 border-t border-slate-800 bg-slate-900 flex-shrink-0">
+        <div className="p-4 border-t border-border bg-card flex-shrink-0">
           <div className="flex items-center justify-between text-sm mb-2">
-            <span className="text-slate-400">Progress</span>
-            <span className="text-cyan-400 font-medium">{progressPercent}%</span>
+            <span className="text-muted-foreground">Progress</span>
+            <span className="text-primary font-medium">{progressPercent}%</span>
           </div>
-          <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full transition-all duration-300"
+              className="h-full bg-gradient-to-r from-primary to-primary rounded-full transition-all duration-300"
               style={{ width: `${Math.max(progressPercent, 2)}%` }}
             />
           </div>
-          <p className="text-xs text-slate-500 mt-2 text-center">
+          <p className="text-xs text-muted-foreground mt-2 text-center">
             {completedStages} of {WIZARD_STAGES.length} stages completed
           </p>
         </div>
@@ -477,17 +477,17 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
       {/* MAIN CONTENT */}
       <main className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/30">
+        <header className="flex items-center justify-between px-6 py-4 border-b border-border bg-card/30">
           <div>
-            <h2 className="text-xl font-bold text-slate-200">
+            <h2 className="text-xl font-bold text-foreground">
               {currentStageInfo?.name}
             </h2>
-            <p className="text-sm text-slate-500 mt-0.5">{currentStageInfo?.description}</p>
+            <p className="text-sm text-muted-foreground mt-0.5">{currentStageInfo?.description}</p>
           </div>
           {onClose && (
             <button
               onClick={onClose}
-              className="p-2 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-colors"
+              className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
               title="Close wizard"
             >
               <X size={20} />
@@ -500,7 +500,7 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
           <div className="max-w-3xl mx-auto">
             {/* Ralph Gate Notice */}
             {currentStageInfo?.hasRalphGate && (
-              <div className="mb-4 flex items-center gap-2 text-sm text-yellow-500 bg-yellow-500/10 border border-yellow-500/20 rounded-lg px-4 py-2">
+              <div className="mb-4 flex items-center gap-2 text-sm text-warning bg-warning/10 border border-yellow-500/20 rounded-lg px-4 py-2">
                 <RefreshCw size={14} />
                 <span>Ralph Wiggum Gate: Minimum 4 iterations, 0.85 quality threshold</span>
               </div>
@@ -508,16 +508,16 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
 
             {/* Stage State */}
             {currentStageState.isProcessing && (
-              <div className="flex items-center gap-3 p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg mb-4">
-                <Loader2 className="animate-spin text-cyan-500" size={20} />
-                <span className="text-cyan-400">Processing stage...</span>
+              <div className="flex items-center gap-3 p-4 bg-primary/10 border border-primary/30 rounded-lg mb-4">
+                <Loader2 className="animate-spin text-primary" size={20} />
+                <span className="text-primary">Processing stage...</span>
               </div>
             )}
 
             {currentStageState.error && (
               <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg mb-4">
-                <AlertCircle className="text-red-500" size={20} />
-                <span className="text-red-400">{currentStageState.error}</span>
+                <AlertCircle className="text-destructive" size={20} />
+                <span className="text-destructive">{currentStageState.error}</span>
               </div>
             )}
 
@@ -527,29 +527,29 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
                   p-4 rounded-lg mb-4 border
                   ${currentStageState.lastOutput.passed
                     ? 'bg-green-500/10 border-green-500/30'
-                    : 'bg-yellow-500/10 border-yellow-500/30'}
+                    : 'bg-warning/10 border-warning/30'}
                 `}
               >
                 <div className="flex items-center gap-3 mb-2">
                   {currentStageState.lastOutput.passed ? (
-                    <Check className="text-green-500" size={20} />
+                    <Check className="text-success" size={20} />
                   ) : (
-                    <RefreshCw className="text-yellow-500" size={20} />
+                    <RefreshCw className="text-warning" size={20} />
                   )}
                   <span
                     className={
-                      currentStageState.lastOutput.passed ? 'text-green-400' : 'text-yellow-400'
+                      currentStageState.lastOutput.passed ? 'text-success' : 'text-warning'
                     }
                   >
                     Iteration {currentStageState.lastOutput.iteration} -{' '}
                     {currentStageState.lastOutput.passed ? 'Passed' : 'Continue refining'}
                   </span>
-                  <span className="text-slate-400 text-sm">
+                  <span className="text-muted-foreground text-sm">
                     Score: {(currentStageState.lastOutput.quality_score * 100).toFixed(1)}%
                   </span>
                 </div>
                 {currentStageState.lastOutput.feedback && (
-                  <p className="text-sm text-slate-400 mt-2">
+                  <p className="text-sm text-muted-foreground mt-2">
                     {getFeedbackText(currentStageState.lastOutput.feedback)}
                   </p>
                 )}
@@ -557,7 +557,7 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
             )}
 
             {/* Stage Content */}
-            <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-6">
+            <div className="bg-card/50 border border-border rounded-lg p-6">
               {activeStage === 'vision' && (
                 <VisionStage
                 projectId={projectId}
@@ -642,22 +642,22 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
         </div>
 
         {/* Footer Navigation */}
-        <footer className="flex items-center justify-between px-6 py-4 border-t border-slate-800 bg-slate-900/30">
+        <footer className="flex items-center justify-between px-6 py-4 border-t border-border bg-card/30">
           <button
             onClick={handleBack}
             disabled={!canGoBack}
             className={`
               flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
               ${canGoBack
-                ? 'bg-slate-800 hover:bg-slate-700 text-slate-200'
-                : 'bg-slate-900 text-slate-600 cursor-not-allowed'}
+                ? 'bg-muted hover:bg-muted text-foreground'
+                : 'bg-card text-muted-foreground cursor-not-allowed'}
             `}
           >
             <ChevronLeft size={18} />
             Back
           </button>
 
-          <div className="flex items-center gap-2 text-sm text-slate-500">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
             Step {getStageIndex(activeStage) + 1} of {WIZARD_STAGES.length}
           </div>
 
@@ -667,8 +667,8 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
             className={`
               flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
               ${canGoNext
-                ? 'bg-cyan-600 hover:bg-cyan-500 text-white font-medium'
-                : 'bg-slate-900 text-slate-600 cursor-not-allowed'}
+                ? 'bg-primary hover:bg-primary text-white font-medium'
+                : 'bg-card text-muted-foreground cursor-not-allowed'}
             `}
           >
             {activeStage === 'execute' ? 'Complete' : 'Next'}

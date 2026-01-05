@@ -93,7 +93,7 @@ function ColorPaletteEditor({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <label className="text-sm font-medium text-slate-300 flex items-center gap-2">
+        <label className="text-sm font-medium text-foreground flex items-center gap-2">
           <Palette size={16} className="text-pink-400" />
           Color Palette
         </label>
@@ -101,7 +101,7 @@ function ColorPaletteEditor({
           <button
             type="button"
             onClick={addDefaultColors}
-            className="text-xs px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-300"
+            className="text-xs px-2 py-1 rounded bg-muted hover:bg-muted-foreground text-foreground"
           >
             Load Defaults
           </button>
@@ -112,7 +112,7 @@ function ColorPaletteEditor({
         {Object.entries(colors).map(([key, value]) => (
           <div
             key={key}
-            className="flex items-center gap-2 bg-slate-800/50 rounded-lg p-2"
+            className="flex items-center gap-2 bg-muted/50 rounded-lg p-2"
           >
             <input
               type="color"
@@ -122,14 +122,14 @@ function ColorPaletteEditor({
               className="w-8 h-8 rounded cursor-pointer border-0 bg-transparent"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-slate-400 truncate">{key}</p>
-              <p className="text-xs text-slate-500 font-mono">{value}</p>
+              <p className="text-xs text-muted-foreground truncate">{key}</p>
+              <p className="text-xs text-muted-foreground font-mono">{value}</p>
             </div>
             {!disabled && (
               <button
                 type="button"
                 onClick={() => removeColor(key)}
-                className="p-1 hover:bg-red-500/20 rounded text-slate-500 hover:text-red-400"
+                className="p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
               >
                 <X size={14} />
               </button>
@@ -145,19 +145,19 @@ function ColorPaletteEditor({
             value={newKey}
             onChange={(e) => setNewKey(e.target.value)}
             placeholder="Color name (e.g., info)"
-            className="flex-1 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="flex-1 bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
           />
           <input
             type="color"
             value={newValue}
             onChange={(e) => setNewValue(e.target.value)}
-            className="w-10 h-8 rounded cursor-pointer border border-slate-700 bg-slate-900"
+            className="w-10 h-8 rounded cursor-pointer border border-border bg-card"
           />
           <button
             type="button"
             onClick={addColor}
             disabled={!newKey.trim()}
-            className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+            className="px-3 py-1.5 rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
           >
             <Plus size={16} />
           </button>
@@ -217,7 +217,7 @@ function TypographyEditor({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <label className="text-sm font-medium text-slate-300 flex items-center gap-2">
+        <label className="text-sm font-medium text-foreground flex items-center gap-2">
           <Type size={16} className="text-orange-400" />
           Typography
         </label>
@@ -225,7 +225,7 @@ function TypographyEditor({
           <button
             type="button"
             onClick={addDefaults}
-            className="text-xs px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-300"
+            className="text-xs px-2 py-1 rounded bg-muted hover:bg-muted-foreground text-foreground"
           >
             Load Defaults
           </button>
@@ -236,21 +236,21 @@ function TypographyEditor({
         {Object.entries(typography).map(([key, value]) => (
           <div
             key={key}
-            className="flex items-center gap-2 bg-slate-800/50 rounded-lg p-2"
+            className="flex items-center gap-2 bg-muted/50 rounded-lg p-2"
           >
-            <span className="text-xs text-slate-400 w-32 truncate">{key}</span>
+            <span className="text-xs text-muted-foreground w-32 truncate">{key}</span>
             <input
               type="text"
               value={value}
               onChange={(e) => updateValue(key, e.target.value)}
               disabled={disabled}
-              className="flex-1 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+              className="flex-1 bg-card border border-border rounded px-2 py-1 text-sm text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
             />
             {!disabled && (
               <button
                 type="button"
                 onClick={() => removeValue(key)}
-                className="p-1 hover:bg-red-500/20 rounded text-slate-500 hover:text-red-400"
+                className="p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
               >
                 <X size={14} />
               </button>
@@ -266,20 +266,20 @@ function TypographyEditor({
             value={newKey}
             onChange={(e) => setNewKey(e.target.value)}
             placeholder="Property name"
-            className="w-32 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="w-32 bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
           />
           <input
             type="text"
             value={newValue}
             onChange={(e) => setNewValue(e.target.value)}
             placeholder="Value"
-            className="flex-1 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="flex-1 bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
           />
           <button
             type="button"
             onClick={addValue}
             disabled={!newKey.trim()}
-            className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+            className="px-3 py-1.5 rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
           >
             <Plus size={16} />
           </button>
@@ -326,8 +326,8 @@ function BreakpointEditor({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <label className="text-sm font-medium text-slate-300 flex items-center gap-2">
-          <Monitor size={16} className="text-green-400" />
+        <label className="text-sm font-medium text-foreground flex items-center gap-2">
+          <Monitor size={16} className="text-success" />
           Responsive Breakpoints
         </label>
         {!disabled && (
@@ -335,21 +335,21 @@ function BreakpointEditor({
             <button
               type="button"
               onClick={() => applyPreset('tailwind')}
-              className="text-xs px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-300"
+              className="text-xs px-2 py-1 rounded bg-muted hover:bg-muted-foreground text-foreground"
             >
               Tailwind
             </button>
             <button
               type="button"
               onClick={() => applyPreset('bootstrap')}
-              className="text-xs px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-300"
+              className="text-xs px-2 py-1 rounded bg-muted hover:bg-muted-foreground text-foreground"
             >
               Bootstrap
             </button>
             <button
               type="button"
               onClick={() => applyPreset('material')}
-              className="text-xs px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-300"
+              className="text-xs px-2 py-1 rounded bg-muted hover:bg-muted-foreground text-foreground"
             >
               Material
             </button>
@@ -363,15 +363,15 @@ function BreakpointEditor({
           return (
             <div
               key={bp}
-              className="flex items-center gap-2 bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2"
+              className="flex items-center gap-2 bg-muted/50 border border-border rounded-lg px-3 py-2"
             >
-              <Icon size={14} className="text-slate-400" />
-              <span className="text-sm text-slate-200 font-mono">{bp}px</span>
+              <Icon size={14} className="text-muted-foreground" />
+              <span className="text-sm text-foreground font-mono">{bp}px</span>
               {!disabled && (
                 <button
                   type="button"
                   onClick={() => removeBreakpoint(bp)}
-                  className="p-0.5 hover:bg-red-500/20 rounded text-slate-500 hover:text-red-400"
+                  className="p-0.5 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
                 >
                   <X size={14} />
                 </button>
@@ -389,13 +389,13 @@ function BreakpointEditor({
             onChange={(e) => setNewValue(e.target.value)}
             placeholder="Width in pixels"
             onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addBreakpoint())}
-            className="w-40 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="w-40 bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
           />
           <button
             type="button"
             onClick={addBreakpoint}
             disabled={!newValue}
-            className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+            className="px-3 py-1.5 rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
           >
             <Plus size={16} />
           </button>
@@ -463,16 +463,16 @@ export function DesignStage({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Stage Description */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+      <div className="bg-card/50 border border-border rounded-lg p-4">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-lg bg-pink-500/20 flex items-center justify-center flex-shrink-0">
             <Palette className="text-pink-400" size={20} />
           </div>
           <div>
-            <h3 className="font-medium text-slate-200 mb-1">
+            <h3 className="font-medium text-foreground mb-1">
               Define Your Design System
             </h3>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-muted-foreground">
               Create a consistent visual identity with colors, typography,
               layout patterns, and responsive breakpoints. Use presets to get
               started quickly.
@@ -485,12 +485,12 @@ export function DesignStage({
       {validationErrors.length > 0 && (
         <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
+            <AlertTriangle className="text-destructive flex-shrink-0 mt-0.5" size={18} />
             <div>
-              <p className="text-red-400 font-medium text-sm mb-1">
+              <p className="text-destructive font-medium text-sm mb-1">
                 Please fix the following:
               </p>
-              <ul className="list-disc list-inside text-sm text-red-400/80 space-y-1">
+              <ul className="list-disc list-inside text-sm text-destructive/80 space-y-1">
                 {validationErrors.map((error, index) => (
                   <li key={index}>{error}</li>
                 ))}
@@ -516,8 +516,8 @@ export function DesignStage({
 
       {/* Shell Pattern */}
       <div className="space-y-3">
-        <label className="text-sm font-medium text-slate-300 flex items-center gap-2">
-          <Layout size={16} className="text-cyan-400" />
+        <label className="text-sm font-medium text-foreground flex items-center gap-2">
+          <Layout size={16} className="text-primary" />
           Shell Pattern
         </label>
         <div className="grid grid-cols-2 gap-3">
@@ -532,16 +532,16 @@ export function DesignStage({
               disabled={isProcessing}
               className={`text-left p-3 rounded-lg border transition-colors ${
                 shellPattern === pattern.value
-                  ? 'bg-cyan-500/20 border-cyan-500/50'
-                  : 'bg-slate-800/50 border-slate-700 hover:border-slate-600'
+                  ? 'bg-primary/20 border-primary/50'
+                  : 'bg-muted/50 border-border hover:border-muted-foreground'
               } disabled:opacity-50`}
             >
               <p className={`text-sm font-medium ${
-                shellPattern === pattern.value ? 'text-cyan-400' : 'text-slate-200'
+                shellPattern === pattern.value ? 'text-primary' : 'text-foreground'
               }`}>
                 {pattern.label}
               </p>
-              <p className="text-xs text-slate-500 mt-1">{pattern.description}</p>
+              <p className="text-xs text-muted-foreground mt-1">{pattern.description}</p>
             </button>
           ))}
         </div>
@@ -559,8 +559,8 @@ export function DesignStage({
 
       {/* Preview Card */}
       {(Object.keys(colorPalette).length > 0 || shellPattern) && (
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-slate-300 mb-3">Preview</h4>
+        <div className="bg-card/50 border border-border rounded-lg p-4">
+          <h4 className="text-sm font-medium text-foreground mb-3">Preview</h4>
           <div
             className="rounded-lg p-4 border"
             style={{
@@ -615,20 +615,20 @@ export function DesignStage({
 
       {/* Previous Output Feedback */}
       {lastOutput && !lastOutput.passed && (
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-          <h4 className="text-yellow-400 font-medium text-sm mb-2">
+        <div className="bg-warning/10 border border-warning/30 rounded-lg p-4">
+          <h4 className="text-warning font-medium text-sm mb-2">
             Feedback from Iteration {lastOutput.iteration}
           </h4>
-          <p className="text-slate-400 text-sm">{lastOutput.feedback}</p>
+          <p className="text-muted-foreground text-sm">{lastOutput.feedback}</p>
         </div>
       )}
 
       {/* Submit Button */}
-      <div className="flex justify-end pt-4 border-t border-slate-800">
+      <div className="flex justify-end pt-4 border-t border-border">
         <button
           type="submit"
           disabled={isProcessing}
-          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary hover:bg-primary text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isProcessing ? (
             <>

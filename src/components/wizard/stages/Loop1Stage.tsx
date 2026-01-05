@@ -49,18 +49,18 @@ interface Loop1StageProps {
 const generateId = () => Math.random().toString(36).substring(2, 9);
 
 const RISK_CATEGORIES = [
-  { value: 'technical', label: 'Technical', color: 'text-blue-400' },
-  { value: 'business', label: 'Business', color: 'text-green-400' },
-  { value: 'resource', label: 'Resource', color: 'text-yellow-400' },
+  { value: 'technical', label: 'Technical', color: 'text-info' },
+  { value: 'business', label: 'Business', color: 'text-success' },
+  { value: 'resource', label: 'Resource', color: 'text-warning' },
   { value: 'timeline', label: 'Timeline', color: 'text-orange-400' },
-  { value: 'external', label: 'External', color: 'text-purple-400' },
+  { value: 'external', label: 'External', color: 'text-accent' },
 ];
 
 const SEVERITY_LEVELS = [
-  { value: 'low', label: 'Low', color: 'bg-green-500/20 text-green-400 border-green-500/30' },
-  { value: 'medium', label: 'Medium', color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' },
+  { value: 'low', label: 'Low', color: 'bg-success/20 text-success border-green-500/30' },
+  { value: 'medium', label: 'Medium', color: 'bg-yellow-500/20 text-warning border-warning/30' },
   { value: 'high', label: 'High', color: 'bg-orange-500/20 text-orange-400 border-orange-500/30' },
-  { value: 'critical', label: 'Critical', color: 'bg-red-500/20 text-red-400 border-red-500/30' },
+  { value: 'critical', label: 'Critical', color: 'bg-red-500/20 text-destructive border-red-500/30' },
 ];
 
 const LIKELIHOOD_LEVELS = [
@@ -86,14 +86,14 @@ function RiskEditor({
   const severityInfo = SEVERITY_LEVELS.find((s) => s.value === risk.severity);
 
   return (
-    <div className="bg-slate-800/50 border border-slate-700 rounded-lg overflow-hidden">
+    <div className="bg-muted/50 border border-border rounded-lg overflow-hidden">
       <div
-        className="flex items-center justify-between p-3 cursor-pointer hover:bg-slate-800/80"
+        className="flex items-center justify-between p-3 cursor-pointer hover:bg-muted/80"
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex items-center gap-3">
-          <Shield className="text-red-400" size={18} />
-          <span className="font-medium text-slate-200">
+          <Shield className="text-destructive" size={18} />
+          <span className="font-medium text-foreground">
             {risk.name || 'Unnamed Risk'}
           </span>
           <span
@@ -110,7 +110,7 @@ function RiskEditor({
                 e.stopPropagation();
                 onRemove();
               }}
-              className="p-1 hover:bg-red-500/20 rounded text-slate-400 hover:text-red-400"
+              className="p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
             >
               <X size={16} />
             </button>
@@ -120,11 +120,11 @@ function RiskEditor({
       </div>
 
       {expanded && (
-        <div className="p-4 pt-0 space-y-4 border-t border-slate-700">
+        <div className="p-4 pt-0 space-y-4 border-t border-border">
           {/* Name & Description */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Risk Name
               </label>
               <input
@@ -133,11 +133,11 @@ function RiskEditor({
                 onChange={(e) => onChange({ ...risk, name: e.target.value })}
                 placeholder="e.g., API Rate Limiting"
                 disabled={disabled}
-                className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+                className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Category
               </label>
               <select
@@ -146,7 +146,7 @@ function RiskEditor({
                   onChange({ ...risk, category: e.target.value as Risk['category'] })
                 }
                 disabled={disabled}
-                className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+                className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
               >
                 {RISK_CATEGORIES.map((cat) => (
                   <option key={cat.value} value={cat.value}>
@@ -158,7 +158,7 @@ function RiskEditor({
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">
               Description
             </label>
             <textarea
@@ -167,14 +167,14 @@ function RiskEditor({
               placeholder="Describe the risk and its potential impact..."
               disabled={disabled}
               rows={2}
-              className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 resize-none disabled:opacity-50"
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring resize-none disabled:opacity-50"
             />
           </div>
 
           {/* Severity & Likelihood */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-2">
+              <label className="block text-xs font-medium text-muted-foreground mb-2">
                 Severity
               </label>
               <div className="flex gap-1">
@@ -189,7 +189,7 @@ function RiskEditor({
                     className={`flex-1 py-1.5 text-xs rounded border transition-colors ${
                       risk.severity === level.value
                         ? level.color
-                        : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-600'
+                        : 'bg-card border-border text-muted-foreground hover:border-muted-foreground'
                     } disabled:opacity-50`}
                   >
                     {level.label}
@@ -198,7 +198,7 @@ function RiskEditor({
               </div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-2">
+              <label className="block text-xs font-medium text-muted-foreground mb-2">
                 Likelihood
               </label>
               <div className="flex gap-1">
@@ -212,8 +212,8 @@ function RiskEditor({
                     disabled={disabled}
                     className={`flex-1 py-1.5 text-xs rounded border transition-colors ${
                       risk.likelihood === level.value
-                        ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400'
-                        : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-600'
+                        ? 'bg-primary/20 border-primary/50 text-primary'
+                        : 'bg-card border-border text-muted-foreground hover:border-muted-foreground'
                     } disabled:opacity-50`}
                     title={level.percent}
                   >
@@ -226,7 +226,7 @@ function RiskEditor({
 
           {/* Mitigation */}
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">
               Mitigation Strategy
             </label>
             <textarea
@@ -235,13 +235,13 @@ function RiskEditor({
               placeholder="How will this risk be mitigated or managed?"
               disabled={disabled}
               rows={2}
-              className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 resize-none disabled:opacity-50"
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring resize-none disabled:opacity-50"
             />
           </div>
 
           {/* Status */}
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-2">
+            <label className="block text-xs font-medium text-muted-foreground mb-2">
               Status
             </label>
             <div className="flex gap-2">
@@ -253,8 +253,8 @@ function RiskEditor({
                   disabled={disabled}
                   className={`px-3 py-1.5 text-xs rounded border capitalize transition-colors ${
                     risk.status === status
-                      ? 'bg-slate-700 border-slate-600 text-slate-200'
-                      : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-600'
+                      ? 'bg-muted border-muted-foreground text-foreground'
+                      : 'bg-card border-border text-muted-foreground hover:border-muted-foreground'
                   } disabled:opacity-50`}
                 >
                   {status}
@@ -322,9 +322,9 @@ function DependencyGraphEditor({
   const getNodeColor = (type: DependencyNode['type']) => {
     switch (type) {
       case 'section':
-        return 'text-cyan-400';
+        return 'text-primary';
       case 'entity':
-        return 'text-purple-400';
+        return 'text-accent';
       case 'external':
         return 'text-orange-400';
     }
@@ -333,7 +333,7 @@ function DependencyGraphEditor({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <label className="text-sm font-medium text-slate-300 flex items-center gap-2">
+        <label className="text-sm font-medium text-foreground flex items-center gap-2">
           <GitBranch size={16} className="text-emerald-400" />
           Dependency Graph
         </label>
@@ -341,25 +341,25 @@ function DependencyGraphEditor({
 
       {/* Visual Graph */}
       {nodes.length > 0 && (
-        <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+        <div className="bg-card/50 border border-border rounded-lg p-4">
           <div className="space-y-3">
             {nodes.map((node) => (
               <div key={node.id} className="flex items-start gap-3">
                 <div className="flex items-center gap-2 min-w-40">
                   <Circle size={10} className={getNodeColor(node.type)} fill="currentColor" />
-                  <span className="text-sm text-slate-200">{node.name}</span>
-                  <span className="text-xs text-slate-500">({node.type})</span>
+                  <span className="text-sm text-foreground">{node.name}</span>
+                  <span className="text-xs text-muted-foreground">({node.type})</span>
                 </div>
                 {node.dependsOn.length > 0 && (
                   <>
-                    <ArrowRight size={14} className="text-slate-600 mt-1" />
+                    <ArrowRight size={14} className="text-muted-foreground mt-1" />
                     <div className="flex flex-wrap gap-1">
                       {node.dependsOn.map((depId) => {
                         const dep = nodes.find((n) => n.id === depId);
                         return dep ? (
                           <span
                             key={depId}
-                            className={`text-xs px-2 py-0.5 rounded ${getNodeColor(dep.type)} bg-slate-800`}
+                            className={`text-xs px-2 py-0.5 rounded ${getNodeColor(dep.type)} bg-muted`}
                           >
                             {dep.name}
                           </span>
@@ -372,7 +372,7 @@ function DependencyGraphEditor({
                   <button
                     type="button"
                     onClick={() => removeNode(node.id)}
-                    className="ml-auto p-1 hover:bg-red-500/20 rounded text-slate-500 hover:text-red-400"
+                    className="ml-auto p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
                   >
                     <X size={14} />
                   </button>
@@ -392,12 +392,12 @@ function DependencyGraphEditor({
             onChange={(e) => setNewNodeName(e.target.value)}
             placeholder="Component name"
             onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addNode())}
-            className="flex-1 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="flex-1 bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
           />
           <select
             value={newNodeType}
             onChange={(e) => setNewNodeType(e.target.value as DependencyNode['type'])}
-            className="bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
           >
             <option value="section">Section</option>
             <option value="entity">Entity</option>
@@ -407,7 +407,7 @@ function DependencyGraphEditor({
             type="button"
             onClick={addNode}
             disabled={!newNodeName.trim()}
-            className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+            className="px-3 py-1.5 rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
           >
             <Plus size={16} />
           </button>
@@ -417,16 +417,16 @@ function DependencyGraphEditor({
       {/* Dependency Matrix */}
       {nodes.length > 1 && !disabled && (
         <div>
-          <p className="text-xs text-slate-500 mb-2">
+          <p className="text-xs text-muted-foreground mb-2">
             Click cells to toggle dependencies (row depends on column):
           </p>
           <div className="overflow-x-auto">
             <table className="text-xs">
               <thead>
                 <tr>
-                  <th className="p-2 text-left text-slate-500">Depends on</th>
+                  <th className="p-2 text-left text-muted-foreground">Depends on</th>
                   {nodes.map((n) => (
-                    <th key={n.id} className="p-2 text-center text-slate-400">
+                    <th key={n.id} className="p-2 text-center text-muted-foreground">
                       {n.name.slice(0, 8)}
                     </th>
                   ))}
@@ -435,11 +435,11 @@ function DependencyGraphEditor({
               <tbody>
                 {nodes.map((row) => (
                   <tr key={row.id}>
-                    <td className="p-2 text-slate-400">{row.name}</td>
+                    <td className="p-2 text-muted-foreground">{row.name}</td>
                     {nodes.map((col) => (
                       <td key={col.id} className="p-2 text-center">
                         {row.id === col.id ? (
-                          <span className="text-slate-700">-</span>
+                          <span className="text-muted">-</span>
                         ) : (
                           <button
                             type="button"
@@ -447,7 +447,7 @@ function DependencyGraphEditor({
                             className={`w-6 h-6 rounded ${
                               row.dependsOn.includes(col.id)
                                 ? 'bg-emerald-500/30 text-emerald-400'
-                                : 'bg-slate-800 text-slate-600 hover:bg-slate-700'
+                                : 'bg-muted text-muted-foreground hover:bg-muted'
                             }`}
                           >
                             {row.dependsOn.includes(col.id) ? '+' : ''}
@@ -481,24 +481,24 @@ function RiskScoreDisplay({ risks }: { risks: Risk[] }) {
   const percentage = Math.round((totalScore / maxScore) * 100);
 
   const getRiskLevel = (pct: number) => {
-    if (pct < 25) return { label: 'Low', color: 'text-green-400 bg-green-500/20' };
-    if (pct < 50) return { label: 'Moderate', color: 'text-yellow-400 bg-yellow-500/20' };
+    if (pct < 25) return { label: 'Low', color: 'text-success bg-success/20' };
+    if (pct < 50) return { label: 'Moderate', color: 'text-warning bg-yellow-500/20' };
     if (pct < 75) return { label: 'High', color: 'text-orange-400 bg-orange-500/20' };
-    return { label: 'Critical', color: 'text-red-400 bg-red-500/20' };
+    return { label: 'Critical', color: 'text-destructive bg-red-500/20' };
   };
 
   const level = getRiskLevel(percentage);
 
   return (
-    <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+    <div className="bg-card/50 border border-border rounded-lg p-4">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm text-slate-400">Overall Risk Score</span>
+        <span className="text-sm text-muted-foreground">Overall Risk Score</span>
         <span className={`text-sm px-2 py-0.5 rounded ${level.color}`}>
           {level.label}
         </span>
       </div>
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+        <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
           <div
             className={`h-full rounded-full transition-all ${
               percentage < 25
@@ -512,9 +512,9 @@ function RiskScoreDisplay({ risks }: { risks: Risk[] }) {
             style={{ width: `${percentage}%` }}
           />
         </div>
-        <span className="text-sm font-mono text-slate-400">{percentage}%</span>
+        <span className="text-sm font-mono text-muted-foreground">{percentage}%</span>
       </div>
-      <p className="text-xs text-slate-500 mt-2">
+      <p className="text-xs text-muted-foreground mt-2">
         {risks.length} risk(s) identified |{' '}
         {risks.filter((r) => r.status === 'mitigated').length} mitigated
       </p>
@@ -603,16 +603,16 @@ export function Loop1Stage({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Stage Description */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+      <div className="bg-card/50 border border-border rounded-lg p-4">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
             <RefreshCw className="text-amber-400" size={20} />
           </div>
           <div>
-            <h3 className="font-medium text-slate-200 mb-1">
+            <h3 className="font-medium text-foreground mb-1">
               Risk Analysis & Feasibility
             </h3>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-muted-foreground">
               Identify potential risks, map dependencies between components, and
               assess overall project feasibility. This is your first feedback loop
               to catch issues early.
@@ -625,12 +625,12 @@ export function Loop1Stage({
       {validationErrors.length > 0 && (
         <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
+            <AlertTriangle className="text-destructive flex-shrink-0 mt-0.5" size={18} />
             <div>
-              <p className="text-red-400 font-medium text-sm mb-1">
+              <p className="text-destructive font-medium text-sm mb-1">
                 Please fix the following:
               </p>
-              <ul className="list-disc list-inside text-sm text-red-400/80 space-y-1">
+              <ul className="list-disc list-inside text-sm text-destructive/80 space-y-1">
                 {validationErrors.map((error, index) => (
                   <li key={index}>{error}</li>
                 ))}
@@ -646,15 +646,15 @@ export function Loop1Stage({
       {/* Risks */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-medium text-slate-300 flex items-center gap-2">
-            <Shield size={16} className="text-red-400" />
+          <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
+            <Shield size={16} className="text-destructive" />
             Risk Assessment
           </h4>
           <button
             type="button"
             onClick={addRisk}
             disabled={isProcessing}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+            className="flex items-center gap-1 px-3 py-1.5 text-sm rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
           >
             <Plus size={14} />
             Add Risk
@@ -662,7 +662,7 @@ export function Loop1Stage({
         </div>
         <div className="space-y-3">
           {risks.length === 0 ? (
-            <div className="text-center py-8 text-slate-500 text-sm border border-dashed border-slate-700 rounded-lg">
+            <div className="text-center py-8 text-muted-foreground text-sm border border-dashed border-border rounded-lg">
               No risks identified. Click "Add Risk" to start risk assessment.
             </div>
           ) : (
@@ -688,8 +688,8 @@ export function Loop1Stage({
 
       {/* Feasibility Notes */}
       <div>
-        <label className="text-sm font-medium text-slate-300 flex items-center gap-2 mb-2">
-          <FileText size={16} className="text-slate-400" />
+        <label className="text-sm font-medium text-foreground flex items-center gap-2 mb-2">
+          <FileText size={16} className="text-muted-foreground" />
           Feasibility Notes
         </label>
         <textarea
@@ -701,26 +701,26 @@ export function Loop1Stage({
           placeholder="Summarize the overall feasibility assessment. Consider: technical complexity, resource availability, timeline constraints, and any blockers or concerns..."
           disabled={isProcessing}
           rows={5}
-          className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 resize-none disabled:opacity-50"
+          className="w-full bg-card border border-border rounded-lg px-4 py-3 text-sm text-foreground focus:outline-none focus:border-ring resize-none disabled:opacity-50"
         />
       </div>
 
       {/* Previous Output Feedback */}
       {lastOutput && !lastOutput.passed && (
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-          <h4 className="text-yellow-400 font-medium text-sm mb-2">
+        <div className="bg-warning/10 border border-warning/30 rounded-lg p-4">
+          <h4 className="text-warning font-medium text-sm mb-2">
             Feedback from Iteration {lastOutput.iteration}
           </h4>
-          <p className="text-slate-400 text-sm">{lastOutput.feedback}</p>
+          <p className="text-muted-foreground text-sm">{lastOutput.feedback}</p>
         </div>
       )}
 
       {/* Submit Button */}
-      <div className="flex justify-end pt-4 border-t border-slate-800">
+      <div className="flex justify-end pt-4 border-t border-border">
         <button
           type="submit"
           disabled={isProcessing}
-          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary hover:bg-primary text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isProcessing ? (
             <>

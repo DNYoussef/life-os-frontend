@@ -85,18 +85,18 @@ function SectionEditor({
   };
 
   return (
-    <div className="bg-slate-800/50 border border-slate-700 rounded-lg overflow-hidden">
+    <div className="bg-muted/50 border border-border rounded-lg overflow-hidden">
       <div
-        className="flex items-center justify-between p-3 cursor-pointer hover:bg-slate-800/80"
+        className="flex items-center justify-between p-3 cursor-pointer hover:bg-muted/80"
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex items-center gap-3">
-          <Layers className="text-cyan-400" size={18} />
-          <span className="font-medium text-slate-200">
+          <Layers className="text-primary" size={18} />
+          <span className="font-medium text-foreground">
             {section.name || `Section ${index + 1}`}
           </span>
           {section.dependencies.length > 0 && (
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-muted-foreground">
               ({section.dependencies.length} dependencies)
             </span>
           )}
@@ -109,7 +109,7 @@ function SectionEditor({
                 e.stopPropagation();
                 onRemove();
               }}
-              className="p-1 hover:bg-red-500/20 rounded text-slate-400 hover:text-red-400"
+              className="p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
             >
               <X size={16} />
             </button>
@@ -119,9 +119,9 @@ function SectionEditor({
       </div>
 
       {expanded && (
-        <div className="p-4 pt-0 space-y-4 border-t border-slate-700">
+        <div className="p-4 pt-0 space-y-4 border-t border-border">
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">
               Section Name
             </label>
             <input
@@ -130,12 +130,12 @@ function SectionEditor({
               onChange={(e) => onChange({ ...section, name: e.target.value })}
               placeholder="e.g., User Authentication"
               disabled={disabled}
-              className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">
               Description
             </label>
             <textarea
@@ -146,13 +146,13 @@ function SectionEditor({
               placeholder="What this section does..."
               disabled={disabled}
               rows={2}
-              className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 resize-none disabled:opacity-50"
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring resize-none disabled:opacity-50"
             />
           </div>
 
           {otherSections.length > 0 && (
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-2">
+              <label className="block text-xs font-medium text-muted-foreground mb-2">
                 Dependencies (sections this depends on)
               </label>
               <div className="flex flex-wrap gap-2">
@@ -164,8 +164,8 @@ function SectionEditor({
                     disabled={disabled || !other.name}
                     className={`px-2 py-1 text-xs rounded-full border transition-colors ${
                       section.dependencies.includes(other.name)
-                        ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400'
-                        : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-600'
+                        ? 'bg-primary/20 border-primary/50 text-primary'
+                        : 'bg-card border-border text-muted-foreground hover:border-muted-foreground'
                     } disabled:opacity-50`}
                   >
                     {other.name || 'Unnamed'}
@@ -227,17 +227,17 @@ function EntityEditor({
   };
 
   return (
-    <div className="bg-slate-800/50 border border-slate-700 rounded-lg overflow-hidden">
+    <div className="bg-muted/50 border border-border rounded-lg overflow-hidden">
       <div
-        className="flex items-center justify-between p-3 cursor-pointer hover:bg-slate-800/80"
+        className="flex items-center justify-between p-3 cursor-pointer hover:bg-muted/80"
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex items-center gap-3">
-          <Database className="text-purple-400" size={18} />
-          <span className="font-medium text-slate-200">
+          <Database className="text-accent" size={18} />
+          <span className="font-medium text-foreground">
             {entity.name || `Entity ${index + 1}`}
           </span>
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-muted-foreground">
             ({entity.fields.length} fields)
           </span>
         </div>
@@ -249,7 +249,7 @@ function EntityEditor({
                 e.stopPropagation();
                 onRemove();
               }}
-              className="p-1 hover:bg-red-500/20 rounded text-slate-400 hover:text-red-400"
+              className="p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
             >
               <X size={16} />
             </button>
@@ -259,9 +259,9 @@ function EntityEditor({
       </div>
 
       {expanded && (
-        <div className="p-4 pt-0 space-y-4 border-t border-slate-700">
+        <div className="p-4 pt-0 space-y-4 border-t border-border">
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">
               Entity Name
             </label>
             <input
@@ -270,13 +270,13 @@ function EntityEditor({
               onChange={(e) => onChange({ ...entity, name: e.target.value })}
               placeholder="e.g., User, Project, Task"
               disabled={disabled}
-              className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
             />
           </div>
 
           {/* Fields */}
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-2">
+            <label className="block text-xs font-medium text-muted-foreground mb-2">
               Fields
             </label>
             {entity.fields.length > 0 && (
@@ -284,20 +284,20 @@ function EntityEditor({
                 {entity.fields.map((field, fieldIndex) => (
                   <div
                     key={fieldIndex}
-                    className="flex items-center gap-2 bg-slate-900 rounded px-3 py-2"
+                    className="flex items-center gap-2 bg-card rounded px-3 py-2"
                   >
-                    <Type size={14} className="text-slate-500" />
-                    <span className="text-sm text-slate-200 flex-1">
+                    <Type size={14} className="text-muted-foreground" />
+                    <span className="text-sm text-foreground flex-1">
                       {field.name}
                     </span>
-                    <span className="text-xs px-2 py-0.5 rounded bg-purple-500/20 text-purple-400">
+                    <span className="text-xs px-2 py-0.5 rounded bg-accent/20 text-accent">
                       {field.type}
                     </span>
                     {!disabled && (
                       <button
                         type="button"
                         onClick={() => removeField(fieldIndex)}
-                        className="p-1 hover:bg-red-500/20 rounded text-slate-400 hover:text-red-400"
+                        className="p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
                       >
                         <X size={14} />
                       </button>
@@ -314,12 +314,12 @@ function EntityEditor({
                   onChange={(e) => setNewFieldName(e.target.value)}
                   placeholder="Field name"
                   onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addField())}
-                  className="flex-1 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="flex-1 bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
                 />
                 <select
                   value={newFieldType}
                   onChange={(e) => setNewFieldType(e.target.value)}
-                  className="bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="bg-card border border-border rounded px-2 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
                 >
                   {FIELD_TYPES.map((type) => (
                     <option key={type} value={type}>
@@ -331,7 +331,7 @@ function EntityEditor({
                   type="button"
                   onClick={addField}
                   disabled={!newFieldName.trim()}
-                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+                  className="px-3 py-1.5 rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
                 >
                   <Plus size={16} />
                 </button>
@@ -342,7 +342,7 @@ function EntityEditor({
           {/* Relationships */}
           {otherEntities.length > 0 && (
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-2">
+              <label className="block text-xs font-medium text-muted-foreground mb-2">
                 <Link2 size={12} className="inline mr-1" />
                 Relationships (entities this relates to)
               </label>
@@ -355,8 +355,8 @@ function EntityEditor({
                     disabled={disabled || !other.name}
                     className={`px-2 py-1 text-xs rounded-full border transition-colors ${
                       entity.relationships.includes(other.name)
-                        ? 'bg-purple-500/20 border-purple-500/50 text-purple-400'
-                        : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-600'
+                        ? 'bg-accent/20 border-purple-500/50 text-accent'
+                        : 'bg-card border-border text-muted-foreground hover:border-muted-foreground'
                     } disabled:opacity-50`}
                   >
                     {other.name || 'Unnamed'}
@@ -485,16 +485,16 @@ export function RoadmapStage({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Stage Description */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+      <div className="bg-card/50 border border-border rounded-lg p-4">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-            <Map className="text-blue-400" size={20} />
+          <div className="w-10 h-10 rounded-lg bg-info/20 flex items-center justify-center flex-shrink-0">
+            <Map className="text-info" size={20} />
           </div>
           <div>
-            <h3 className="font-medium text-slate-200 mb-1">
+            <h3 className="font-medium text-foreground mb-1">
               Plan Your Roadmap
             </h3>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-muted-foreground">
               Define the main sections of your application and the data entities
               (models) that will power it. Sections can depend on each other, and
               entities can have relationships.
@@ -507,12 +507,12 @@ export function RoadmapStage({
       {validationErrors.length > 0 && (
         <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
+            <AlertTriangle className="text-destructive flex-shrink-0 mt-0.5" size={18} />
             <div>
-              <p className="text-red-400 font-medium text-sm mb-1">
+              <p className="text-destructive font-medium text-sm mb-1">
                 Please fix the following:
               </p>
-              <ul className="list-disc list-inside text-sm text-red-400/80 space-y-1">
+              <ul className="list-disc list-inside text-sm text-destructive/80 space-y-1">
                 {validationErrors.map((error, index) => (
                   <li key={index}>{error}</li>
                 ))}
@@ -525,15 +525,15 @@ export function RoadmapStage({
       {/* Sections */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-medium text-slate-300 flex items-center gap-2">
-            <Layers size={16} className="text-cyan-400" />
+          <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
+            <Layers size={16} className="text-primary" />
             Sections
           </h4>
           <button
             type="button"
             onClick={addSection}
             disabled={isProcessing}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+            className="flex items-center gap-1 px-3 py-1.5 text-sm rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
           >
             <Plus size={14} />
             Add Section
@@ -541,7 +541,7 @@ export function RoadmapStage({
         </div>
         <div className="space-y-3">
           {sections.length === 0 ? (
-            <div className="text-center py-8 text-slate-500 text-sm border border-dashed border-slate-700 rounded-lg">
+            <div className="text-center py-8 text-muted-foreground text-sm border border-dashed border-border rounded-lg">
               No sections yet. Click "Add Section" to define your app's modules.
             </div>
           ) : (
@@ -563,15 +563,15 @@ export function RoadmapStage({
       {/* Entities */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-medium text-slate-300 flex items-center gap-2">
-            <Database size={16} className="text-purple-400" />
+          <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
+            <Database size={16} className="text-accent" />
             Data Entities
           </h4>
           <button
             type="button"
             onClick={addEntity}
             disabled={isProcessing}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+            className="flex items-center gap-1 px-3 py-1.5 text-sm rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
           >
             <Plus size={14} />
             Add Entity
@@ -579,7 +579,7 @@ export function RoadmapStage({
         </div>
         <div className="space-y-3">
           {entities.length === 0 ? (
-            <div className="text-center py-8 text-slate-500 text-sm border border-dashed border-slate-700 rounded-lg">
+            <div className="text-center py-8 text-muted-foreground text-sm border border-dashed border-border rounded-lg">
               No entities yet. Click "Add Entity" to define your data models.
             </div>
           ) : (
@@ -600,20 +600,20 @@ export function RoadmapStage({
 
       {/* Previous Output Feedback */}
       {lastOutput && !lastOutput.passed && (
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-          <h4 className="text-yellow-400 font-medium text-sm mb-2">
+        <div className="bg-warning/10 border border-warning/30 rounded-lg p-4">
+          <h4 className="text-warning font-medium text-sm mb-2">
             Feedback from Iteration {lastOutput.iteration}
           </h4>
-          <p className="text-slate-400 text-sm">{lastOutput.feedback}</p>
+          <p className="text-muted-foreground text-sm">{lastOutput.feedback}</p>
         </div>
       )}
 
       {/* Submit Button */}
-      <div className="flex justify-end pt-4 border-t border-slate-800">
+      <div className="flex justify-end pt-4 border-t border-border">
         <button
           type="submit"
           disabled={isProcessing}
-          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary hover:bg-primary text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isProcessing ? (
             <>

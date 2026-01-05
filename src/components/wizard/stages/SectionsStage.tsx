@@ -95,17 +95,17 @@ function UserFlowEditor({
   };
 
   return (
-    <div className="bg-slate-800/50 border border-slate-700 rounded-lg overflow-hidden">
+    <div className="bg-muted/50 border border-border rounded-lg overflow-hidden">
       <div
-        className="flex items-center justify-between p-3 cursor-pointer hover:bg-slate-800/80"
+        className="flex items-center justify-between p-3 cursor-pointer hover:bg-muted/80"
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex items-center gap-3">
           <GitBranch className="text-emerald-400" size={18} />
-          <span className="font-medium text-slate-200">
+          <span className="font-medium text-foreground">
             {flow.name || 'Unnamed Flow'}
           </span>
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-muted-foreground">
             ({flow.steps.length} steps)
           </span>
         </div>
@@ -117,7 +117,7 @@ function UserFlowEditor({
                 e.stopPropagation();
                 onRemove();
               }}
-              className="p-1 hover:bg-red-500/20 rounded text-slate-400 hover:text-red-400"
+              className="p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
             >
               <X size={16} />
             </button>
@@ -127,11 +127,11 @@ function UserFlowEditor({
       </div>
 
       {expanded && (
-        <div className="p-4 pt-0 space-y-4 border-t border-slate-700">
+        <div className="p-4 pt-0 space-y-4 border-t border-border">
           {/* Flow Name & Description */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Flow Name
               </label>
               <input
@@ -140,11 +140,11 @@ function UserFlowEditor({
                 onChange={(e) => onChange({ ...flow, name: e.target.value })}
                 placeholder="e.g., User Registration"
                 disabled={disabled}
-                className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+                className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Description
               </label>
               <input
@@ -155,14 +155,14 @@ function UserFlowEditor({
                 }
                 placeholder="What this flow accomplishes"
                 disabled={disabled}
-                className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+                className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
               />
             </div>
           </div>
 
           {/* Steps */}
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-2">
+            <label className="block text-xs font-medium text-muted-foreground mb-2">
               Flow Steps
             </label>
             {flow.steps.length > 0 && (
@@ -170,9 +170,9 @@ function UserFlowEditor({
                 {flow.steps.map((step, index) => (
                   <div
                     key={step.id}
-                    className="flex items-start gap-2 bg-slate-900 rounded-lg p-3"
+                    className="flex items-start gap-2 bg-card rounded-lg p-3"
                   >
-                    <div className="flex items-center gap-2 text-slate-500">
+                    <div className="flex items-center gap-2 text-muted-foreground">
                       <GripVertical size={14} className="cursor-grab" />
                       <span className="text-xs font-mono w-5">{index + 1}</span>
                     </div>
@@ -185,7 +185,7 @@ function UserFlowEditor({
                         }
                         placeholder="Action (e.g., Click 'Sign Up')"
                         disabled={disabled}
-                        className="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+                        className="w-full bg-muted border border-border rounded px-2 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
                       />
                       <input
                         type="text"
@@ -195,20 +195,20 @@ function UserFlowEditor({
                         }
                         placeholder="Expected result or note"
                         disabled={disabled}
-                        className="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-xs text-slate-400 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+                        className="w-full bg-muted border border-border rounded px-2 py-1.5 text-xs text-muted-foreground focus:outline-none focus:border-ring disabled:opacity-50"
                       />
                     </div>
                     {index < flow.steps.length - 1 && (
                       <ArrowRight
                         size={14}
-                        className="text-slate-600 mt-2 flex-shrink-0"
+                        className="text-muted-foreground mt-2 flex-shrink-0"
                       />
                     )}
                     {!disabled && (
                       <button
                         type="button"
                         onClick={() => removeStep(step.id)}
-                        className="p-1 hover:bg-red-500/20 rounded text-slate-500 hover:text-red-400"
+                        className="p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
                       >
                         <X size={14} />
                       </button>
@@ -228,7 +228,7 @@ function UserFlowEditor({
                   onKeyDown={(e) =>
                     e.key === 'Enter' && (e.preventDefault(), addStep())
                   }
-                  className="flex-1 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="flex-1 bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
                 />
                 <input
                   type="text"
@@ -238,13 +238,13 @@ function UserFlowEditor({
                   onKeyDown={(e) =>
                     e.key === 'Enter' && (e.preventDefault(), addStep())
                   }
-                  className="flex-1 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="flex-1 bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
                 />
                 <button
                   type="button"
                   onClick={addStep}
                   disabled={!newStepAction.trim()}
-                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+                  className="px-3 py-1.5 rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
                 >
                   <Plus size={16} />
                 </button>
@@ -300,7 +300,7 @@ function UIRequirementsEditor({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <label className="text-sm font-medium text-slate-300 flex items-center gap-2">
+        <label className="text-sm font-medium text-foreground flex items-center gap-2">
           <ListChecks size={16} className="text-amber-400" />
           UI Requirements
         </label>
@@ -311,14 +311,14 @@ function UIRequirementsEditor({
           {requirements.map((req, index) => (
             <div
               key={index}
-              className="flex items-center gap-2 bg-slate-800/50 rounded-lg px-3 py-2"
+              className="flex items-center gap-2 bg-muted/50 rounded-lg px-3 py-2"
             >
-              <span className="flex-1 text-sm text-slate-200">{req}</span>
+              <span className="flex-1 text-sm text-foreground">{req}</span>
               {!disabled && (
                 <button
                   type="button"
                   onClick={() => removeRequirement(index)}
-                  className="p-1 hover:bg-red-500/20 rounded text-slate-500 hover:text-red-400"
+                  className="p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
                 >
                   <X size={14} />
                 </button>
@@ -339,13 +339,13 @@ function UIRequirementsEditor({
               onKeyDown={(e) =>
                 e.key === 'Enter' && (e.preventDefault(), addRequirement())
               }
-              className="flex-1 bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+              className="flex-1 bg-card border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring"
             />
             <button
               type="button"
               onClick={addRequirement}
               disabled={!newReq.trim()}
-              className="px-3 py-2 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+              className="px-3 py-2 rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
             >
               <Plus size={16} />
             </button>
@@ -353,14 +353,14 @@ function UIRequirementsEditor({
 
           {availableSuggestions.length > 0 && (
             <div>
-              <p className="text-xs text-slate-500 mb-2">Quick add:</p>
+              <p className="text-xs text-muted-foreground mb-2">Quick add:</p>
               <div className="flex flex-wrap gap-2">
                 {availableSuggestions.slice(0, 5).map((suggestion) => (
                   <button
                     key={suggestion}
                     type="button"
                     onClick={() => onChange([...requirements, suggestion])}
-                    className="text-xs px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 border border-slate-700"
+                    className="text-xs px-2 py-1 rounded bg-muted hover:bg-muted text-muted-foreground hover:text-foreground border border-border"
                   >
                     + {suggestion}
                   </button>
@@ -429,7 +429,7 @@ function SampleDataEditor({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <label className="text-sm font-medium text-slate-300 flex items-center gap-2">
+        <label className="text-sm font-medium text-foreground flex items-center gap-2">
           <Database size={16} className="text-violet-400" />
           Sample Data
         </label>
@@ -442,7 +442,7 @@ function SampleDataEditor({
                 setJsonText(JSON.stringify(data, null, 2));
               }
             }}
-            className="text-xs px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-300"
+            className="text-xs px-2 py-1 rounded bg-muted hover:bg-muted-foreground text-foreground"
           >
             {jsonMode ? 'Key-Value Mode' : 'JSON Mode'}
           </button>
@@ -459,16 +459,16 @@ function SampleDataEditor({
             }}
             disabled={disabled}
             rows={8}
-            className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm text-slate-200 font-mono focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+            className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground font-mono focus:outline-none focus:border-ring disabled:opacity-50"
           />
           {jsonError && (
-            <p className="text-xs text-red-400">{jsonError}</p>
+            <p className="text-xs text-destructive">{jsonError}</p>
           )}
           {!disabled && (
             <button
               type="button"
               onClick={applyJson}
-              className="text-xs px-3 py-1.5 rounded bg-cyan-600 hover:bg-cyan-500 text-white"
+              className="text-xs px-3 py-1.5 rounded bg-primary hover:bg-primary text-white"
             >
               Apply JSON
             </button>
@@ -481,17 +481,17 @@ function SampleDataEditor({
               {Object.entries(data).map(([key, value]) => (
                 <div
                   key={key}
-                  className="flex items-center gap-2 bg-slate-800/50 rounded-lg px-3 py-2"
+                  className="flex items-center gap-2 bg-muted/50 rounded-lg px-3 py-2"
                 >
-                  <span className="text-sm text-slate-400 font-mono">{key}:</span>
-                  <span className="flex-1 text-sm text-slate-200 font-mono truncate">
+                  <span className="text-sm text-muted-foreground font-mono">{key}:</span>
+                  <span className="flex-1 text-sm text-foreground font-mono truncate">
                     {formatValue(value)}
                   </span>
                   {!disabled && (
                     <button
                       type="button"
                       onClick={() => removeField(key)}
-                      className="p-1 hover:bg-red-500/20 rounded text-slate-500 hover:text-red-400"
+                      className="p-1 hover:bg-red-500/20 rounded text-muted-foreground hover:text-destructive"
                     >
                       <X size={14} />
                     </button>
@@ -508,7 +508,7 @@ function SampleDataEditor({
                 value={newKey}
                 onChange={(e) => setNewKey(e.target.value)}
                 placeholder="Key"
-                className="w-32 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+                className="w-32 bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
               />
               <input
                 type="text"
@@ -518,13 +518,13 @@ function SampleDataEditor({
                 onKeyDown={(e) =>
                   e.key === 'Enter' && (e.preventDefault(), addField())
                 }
-                className="flex-1 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+                className="flex-1 bg-card border border-border rounded px-3 py-1.5 text-sm text-foreground focus:outline-none focus:border-ring"
               />
               <button
                 type="button"
                 onClick={addField}
                 disabled={!newKey.trim()}
-                className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+                className="px-3 py-1.5 rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
               >
                 <Plus size={16} />
               </button>
@@ -639,16 +639,16 @@ export function SectionsStage({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Stage Description */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+      <div className="bg-card/50 border border-border rounded-lg p-4">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
-            <Layout className="text-indigo-400" size={20} />
+          <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
+            <Layout className="text-accent" size={20} />
           </div>
           <div>
-            <h3 className="font-medium text-slate-200 mb-1">
+            <h3 className="font-medium text-foreground mb-1">
               Define Section Details
             </h3>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-muted-foreground">
               For each section in your roadmap, define the user flows (step-by-step
               interactions), UI requirements, and sample data to test with.
             </p>
@@ -660,12 +660,12 @@ export function SectionsStage({
       {validationErrors.length > 0 && (
         <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
+            <AlertTriangle className="text-destructive flex-shrink-0 mt-0.5" size={18} />
             <div>
-              <p className="text-red-400 font-medium text-sm mb-1">
+              <p className="text-destructive font-medium text-sm mb-1">
                 Please fix the following:
               </p>
-              <ul className="list-disc list-inside text-sm text-red-400/80 space-y-1">
+              <ul className="list-disc list-inside text-sm text-destructive/80 space-y-1">
                 {validationErrors.map((error, index) => (
                   <li key={index}>{error}</li>
                 ))}
@@ -677,7 +677,7 @@ export function SectionsStage({
 
       {/* Section Selector */}
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           Select Section to Define
         </label>
         <div className="grid grid-cols-2 gap-2">
@@ -692,18 +692,18 @@ export function SectionsStage({
               disabled={isProcessing}
               className={`text-left p-3 rounded-lg border transition-colors ${
                 sectionId === section.name
-                  ? 'bg-indigo-500/20 border-indigo-500/50'
-                  : 'bg-slate-800/50 border-slate-700 hover:border-slate-600'
+                  ? 'bg-accent/20 border-indigo-500/50'
+                  : 'bg-muted/50 border-border hover:border-muted-foreground'
               } disabled:opacity-50`}
             >
               <p
                 className={`text-sm font-medium ${
-                  sectionId === section.name ? 'text-indigo-400' : 'text-slate-200'
+                  sectionId === section.name ? 'text-accent' : 'text-foreground'
                 }`}
               >
                 {section.name}
               </p>
-              <p className="text-xs text-slate-500 mt-0.5">{section.description}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{section.description}</p>
             </button>
           ))}
         </div>
@@ -712,7 +712,7 @@ export function SectionsStage({
       {/* User Flows */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-medium text-slate-300 flex items-center gap-2">
+          <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
             <GitBranch size={16} className="text-emerald-400" />
             User Flows
           </h4>
@@ -720,7 +720,7 @@ export function SectionsStage({
             type="button"
             onClick={addUserFlow}
             disabled={isProcessing}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+            className="flex items-center gap-1 px-3 py-1.5 text-sm rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
           >
             <Plus size={14} />
             Add Flow
@@ -728,7 +728,7 @@ export function SectionsStage({
         </div>
         <div className="space-y-3">
           {userFlows.length === 0 ? (
-            <div className="text-center py-8 text-slate-500 text-sm border border-dashed border-slate-700 rounded-lg">
+            <div className="text-center py-8 text-muted-foreground text-sm border border-dashed border-border rounded-lg">
               No user flows yet. Add flows to describe how users interact with this
               section.
             </div>
@@ -765,20 +765,20 @@ export function SectionsStage({
 
       {/* Previous Output Feedback */}
       {lastOutput && !lastOutput.passed && (
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-          <h4 className="text-yellow-400 font-medium text-sm mb-2">
+        <div className="bg-warning/10 border border-warning/30 rounded-lg p-4">
+          <h4 className="text-warning font-medium text-sm mb-2">
             Feedback from Iteration {lastOutput.iteration}
           </h4>
-          <p className="text-slate-400 text-sm">{lastOutput.feedback}</p>
+          <p className="text-muted-foreground text-sm">{lastOutput.feedback}</p>
         </div>
       )}
 
       {/* Submit Button */}
-      <div className="flex justify-end pt-4 border-t border-slate-800">
+      <div className="flex justify-end pt-4 border-t border-border">
         <button
           type="submit"
           disabled={isProcessing}
-          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary hover:bg-primary text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isProcessing ? (
             <>

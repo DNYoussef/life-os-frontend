@@ -64,9 +64,9 @@ const CAPABILITY_ICONS: Record<CapabilityType, React.ComponentType<{ size?: numb
 };
 
 const CAPABILITY_COLORS: Record<CapabilityType, string> = {
-  skill: 'text-cyan-400 bg-cyan-500/20 border-cyan-500/30',
-  agent: 'text-purple-400 bg-purple-500/20 border-purple-500/30',
-  command: 'text-green-400 bg-green-500/20 border-green-500/30',
+  skill: 'text-primary bg-primary/20 border-primary/30',
+  agent: 'text-accent bg-accent/20 border-purple-500/30',
+  command: 'text-success bg-success/20 border-green-500/30',
   playbook: 'text-orange-400 bg-orange-500/20 border-orange-500/30',
   workflow: 'text-pink-400 bg-pink-500/20 border-pink-500/30',
 };
@@ -76,10 +76,10 @@ function ConfidenceBadge({ score }: { score: number }) {
   const percentage = Math.round(score * 100);
   const color =
     percentage >= 80
-      ? 'text-green-400 bg-green-500/20'
+      ? 'text-success bg-success/20'
       : percentage >= 60
-      ? 'text-yellow-400 bg-yellow-500/20'
-      : 'text-red-400 bg-red-500/20';
+      ? 'text-warning bg-yellow-500/20'
+      : 'text-destructive bg-red-500/20';
 
   return (
     <span className={`text-xs px-2 py-0.5 rounded ${color}`}>
@@ -101,7 +101,7 @@ function CapabilityCard({
   disabled?: boolean;
 }) {
   const Icon = CAPABILITY_ICONS[capability.type] || HelpCircle;
-  const colorClass = CAPABILITY_COLORS[capability.type] || 'text-slate-400 bg-slate-500/20 border-slate-500/30';
+  const colorClass = CAPABILITY_COLORS[capability.type] || 'text-muted-foreground bg-muted-foreground/20 border-muted-foreground/30';
 
   return (
     <button
@@ -110,8 +110,8 @@ function CapabilityCard({
       disabled={disabled}
       className={`w-full text-left p-3 rounded-lg border transition-all ${
         isSelected
-          ? 'bg-cyan-500/20 border-cyan-500/50 ring-1 ring-cyan-500/30'
-          : 'bg-slate-800/50 border-slate-700 hover:border-slate-600'
+          ? 'bg-primary/20 border-primary/50 ring-1 ring-primary/30'
+          : 'bg-muted/50 border-border hover:border-muted-foreground'
       } disabled:opacity-50 disabled:cursor-not-allowed`}
     >
       <div className="flex items-start gap-3">
@@ -120,7 +120,7 @@ function CapabilityCard({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <span className="font-medium text-slate-200 truncate">
+            <span className="font-medium text-foreground truncate">
               {capability.name}
             </span>
             <span className={`text-xs px-1.5 py-0.5 rounded capitalize ${colorClass}`}>
@@ -130,7 +130,7 @@ function CapabilityCard({
               <ConfidenceBadge score={capability.confidence} />
             )}
           </div>
-          <p className="text-xs text-slate-500 mt-1 line-clamp-2">
+          <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
             {capability.description}
           </p>
           {capability.tags && capability.tags.length > 0 && (
@@ -138,7 +138,7 @@ function CapabilityCard({
               {capability.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs px-1.5 py-0.5 rounded bg-slate-700 text-slate-400"
+                  className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground"
                 >
                   {tag}
                 </span>
@@ -147,7 +147,7 @@ function CapabilityCard({
           )}
         </div>
         {isSelected && (
-          <Check size={18} className="text-cyan-400 flex-shrink-0" />
+          <Check size={18} className="text-primary flex-shrink-0" />
         )}
       </div>
     </button>
@@ -205,32 +205,32 @@ function TaskMatchCard({
   const bestMatch = taskMatch.matches[0];
 
   return (
-    <div className="bg-slate-800/50 border border-slate-700 rounded-lg overflow-hidden">
+    <div className="bg-muted/50 border border-border rounded-lg overflow-hidden">
       {/* Header */}
       <div
-        className="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-800/80"
+        className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/80"
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex items-center gap-3 flex-1 min-w-0">
           {taskMatch.hasGap ? (
-            <div className="p-2 rounded-lg bg-red-500/20 text-red-400">
+            <div className="p-2 rounded-lg bg-red-500/20 text-destructive">
               <AlertTriangle size={18} />
             </div>
           ) : taskMatch.selectedCapability ? (
-            <div className="p-2 rounded-lg bg-green-500/20 text-green-400">
+            <div className="p-2 rounded-lg bg-success/20 text-success">
               <Check size={18} />
             </div>
           ) : (
-            <div className="p-2 rounded-lg bg-yellow-500/20 text-yellow-400">
+            <div className="p-2 rounded-lg bg-yellow-500/20 text-warning">
               <Puzzle size={18} />
             </div>
           )}
           <div className="flex-1 min-w-0">
-            <h4 className="font-medium text-slate-200 truncate">
+            <h4 className="font-medium text-foreground truncate">
               {taskMatch.taskTitle}
             </h4>
             {taskMatch.taskDescription && (
-              <p className="text-xs text-slate-500 truncate">
+              <p className="text-xs text-muted-foreground truncate">
                 {taskMatch.taskDescription}
               </p>
             )}
@@ -240,18 +240,18 @@ function TaskMatchCard({
         <div className="flex items-center gap-3">
           {taskMatch.selectedCapability && (
             <div className="flex items-center gap-2">
-              <span className="text-sm text-cyan-400">
+              <span className="text-sm text-primary">
                 {taskMatch.selectedCapability.name}
               </span>
               {taskMatch.manualOverride && (
-                <span className="text-xs px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-400">
+                <span className="text-xs px-1.5 py-0.5 rounded bg-accent/20 text-accent">
                   Manual
                 </span>
               )}
             </div>
           )}
           {taskMatch.hasGap && !taskMatch.selectedCapability && (
-            <span className="text-xs px-2 py-1 rounded bg-red-500/20 text-red-400">
+            <span className="text-xs px-2 py-1 rounded bg-red-500/20 text-destructive">
               Gap - No Match
             </span>
           )}
@@ -261,14 +261,14 @@ function TaskMatchCard({
 
       {/* Expanded Content */}
       {expanded && (
-        <div className="p-4 pt-0 space-y-4 border-t border-slate-700">
+        <div className="p-4 pt-0 space-y-4 border-t border-border">
           {/* Best Match Suggestion */}
           {bestMatch && !taskMatch.selectedCapability && (
-            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3">
+            <div className="bg-primary/10 border border-primary/30 rounded-lg p-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Sparkles size={14} className="text-cyan-400" />
-                  <span className="text-sm text-cyan-400">Recommended Match</span>
+                  <Sparkles size={14} className="text-primary" />
+                  <span className="text-sm text-primary">Recommended Match</span>
                 </div>
                 <button
                   type="button"
@@ -282,16 +282,16 @@ function TaskMatchCard({
                     })
                   }
                   disabled={disabled}
-                  className="text-xs px-3 py-1 rounded bg-cyan-600 hover:bg-cyan-500 text-white disabled:opacity-50"
+                  className="text-xs px-3 py-1 rounded bg-primary hover:bg-primary text-white disabled:opacity-50"
                 >
                   Accept
                 </button>
               </div>
-              <p className="text-sm text-slate-300 mt-1">
+              <p className="text-sm text-foreground mt-1">
                 {bestMatch.capability_name}{' '}
-                <span className="text-slate-500">({bestMatch.capability_type})</span>
+                <span className="text-muted-foreground">({bestMatch.capability_type})</span>
               </p>
-              <div className="flex items-center gap-3 mt-2 text-xs text-slate-500">
+              <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
                 <span>Confidence: {Math.round(bestMatch.confidence * 100)}%</span>
                 {bestMatch.historical_success_rate && (
                   <span>
@@ -306,7 +306,7 @@ function TaskMatchCard({
           <div className="flex gap-2">
             <div className="relative flex-1">
               <Search
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
+                className="absolute left-3 top-1/2 -tranmuted-y-1/2 text-muted-foreground"
                 size={16}
               />
               <input
@@ -315,14 +315,14 @@ function TaskMatchCard({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search capabilities..."
                 disabled={disabled}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+                className="w-full bg-card border border-border rounded-lg pl-10 pr-4 py-2 text-sm text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
               />
             </div>
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value as CapabilityType | 'all')}
               disabled={disabled}
-              className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+              className="bg-card border border-border rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
             >
               <option value="all">All Types</option>
               <option value="skill">Skills</option>
@@ -336,7 +336,7 @@ function TaskMatchCard({
           {/* Capability List */}
           <div className="space-y-2 max-h-64 overflow-y-auto">
             {filteredCapabilities.length === 0 ? (
-              <div className="text-center py-6 text-slate-500 text-sm">
+              <div className="text-center py-6 text-muted-foreground text-sm">
                 No matching capabilities found.
                 {taskMatch.hasGap && (
                   <p className="mt-1 text-xs">
@@ -363,7 +363,7 @@ function TaskMatchCard({
               <button
                 type="button"
                 onClick={onClearSelection}
-                className="text-xs text-slate-400 hover:text-slate-200"
+                className="text-xs text-muted-foreground hover:text-foreground"
               >
                 Clear selection
               </button>
@@ -384,21 +384,21 @@ function MatchingSummary({ taskMatches }: { taskMatches: TaskMatch[] }) {
 
   return (
     <div className="grid grid-cols-4 gap-3">
-      <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-3 text-center">
-        <p className="text-2xl font-bold text-slate-200">{total}</p>
-        <p className="text-xs text-slate-500">Total Tasks</p>
+      <div className="bg-muted/50 border border-border rounded-lg p-3 text-center">
+        <p className="text-2xl font-bold text-foreground">{total}</p>
+        <p className="text-xs text-muted-foreground">Total Tasks</p>
       </div>
       <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 text-center">
-        <p className="text-2xl font-bold text-green-400">{matched}</p>
-        <p className="text-xs text-green-400/70">Matched</p>
+        <p className="text-2xl font-bold text-success">{matched}</p>
+        <p className="text-xs text-success/70">Matched</p>
       </div>
-      <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 text-center">
-        <p className="text-2xl font-bold text-yellow-400">{pending}</p>
-        <p className="text-xs text-yellow-400/70">Pending</p>
+      <div className="bg-warning/10 border border-warning/30 rounded-lg p-3 text-center">
+        <p className="text-2xl font-bold text-warning">{pending}</p>
+        <p className="text-xs text-warning/70">Pending</p>
       </div>
       <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-center">
-        <p className="text-2xl font-bold text-red-400">{gaps}</p>
-        <p className="text-xs text-red-400/70">Gaps</p>
+        <p className="text-2xl font-bold text-destructive">{gaps}</p>
+        <p className="text-xs text-destructive/70">Gaps</p>
       </div>
     </div>
   );
@@ -587,7 +587,7 @@ export function CapabilityMatchStage({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Loader2 className="animate-spin text-cyan-500" size={32} />
+        <Loader2 className="animate-spin text-primary" size={32} />
       </div>
     );
   }
@@ -595,16 +595,16 @@ export function CapabilityMatchStage({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Stage Description */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+      <div className="bg-card/50 border border-border rounded-lg p-4">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-            <Puzzle className="text-purple-400" size={20} />
+          <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
+            <Puzzle className="text-accent" size={20} />
           </div>
           <div className="flex-1">
-            <h3 className="font-medium text-slate-200 mb-1">
+            <h3 className="font-medium text-foreground mb-1">
               Match Tasks to Capabilities
             </h3>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-muted-foreground">
               Map each project task to the best matching capability from the
               Context Cascade registry. Skills, agents, commands, and playbooks
               are automatically suggested based on task requirements.
@@ -614,7 +614,7 @@ export function CapabilityMatchStage({
             type="button"
             onClick={runAutoMatch}
             disabled={isProcessing}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm rounded bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50"
+            className="flex items-center gap-2 px-3 py-1.5 text-sm rounded bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50"
           >
             <RefreshCw size={14} />
             Re-run Matching
@@ -624,9 +624,9 @@ export function CapabilityMatchStage({
 
       {/* Error */}
       {error && (
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 flex items-center gap-3">
-          <AlertTriangle className="text-yellow-500 flex-shrink-0" size={18} />
-          <span className="text-yellow-400 text-sm">{error} (showing demo data)</span>
+        <div className="bg-warning/10 border border-warning/30 rounded-lg p-4 flex items-center gap-3">
+          <AlertTriangle className="text-warning flex-shrink-0" size={18} />
+          <span className="text-warning text-sm">{error} (showing demo data)</span>
         </div>
       )}
 
@@ -634,12 +634,12 @@ export function CapabilityMatchStage({
       {validationErrors.length > 0 && (
         <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
+            <AlertTriangle className="text-destructive flex-shrink-0 mt-0.5" size={18} />
             <div>
-              <p className="text-red-400 font-medium text-sm mb-1">
+              <p className="text-destructive font-medium text-sm mb-1">
                 Please fix the following:
               </p>
-              <ul className="list-disc list-inside text-sm text-red-400/80 space-y-1">
+              <ul className="list-disc list-inside text-sm text-destructive/80 space-y-1">
                 {validationErrors.map((error, index) => (
                   <li key={index}>{error}</li>
                 ))}
@@ -667,9 +667,9 @@ export function CapabilityMatchStage({
       </div>
 
       {/* Registry Link */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+      <div className="bg-card/50 border border-border rounded-lg p-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-sm text-slate-400">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Bot size={16} />
             <span>
               Capabilities loaded from Context Cascade Registry
@@ -679,7 +679,7 @@ export function CapabilityMatchStage({
             href="/agents"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-xs text-cyan-400 hover:text-cyan-300"
+            className="flex items-center gap-1 text-xs text-primary hover:text-primary"
           >
             View Registry
             <ExternalLink size={12} />
@@ -689,20 +689,20 @@ export function CapabilityMatchStage({
 
       {/* Previous Output Feedback */}
       {lastOutput && !lastOutput.passed && (
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-          <h4 className="text-yellow-400 font-medium text-sm mb-2">
+        <div className="bg-warning/10 border border-warning/30 rounded-lg p-4">
+          <h4 className="text-warning font-medium text-sm mb-2">
             Feedback from Iteration {lastOutput.iteration}
           </h4>
-          <p className="text-slate-400 text-sm">{lastOutput.feedback}</p>
+          <p className="text-muted-foreground text-sm">{lastOutput.feedback}</p>
         </div>
       )}
 
       {/* Submit Button */}
-      <div className="flex justify-end pt-4 border-t border-slate-800">
+      <div className="flex justify-end pt-4 border-t border-border">
         <button
           type="submit"
           disabled={isProcessing}
-          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary hover:bg-primary text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isProcessing ? (
             <>

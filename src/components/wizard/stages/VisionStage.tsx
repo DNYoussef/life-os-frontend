@@ -62,13 +62,13 @@ function ArrayInput({
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-medium text-slate-400">
+      <label className="block text-sm font-medium text-muted-foreground">
         {label}
       </label>
       <div className="flex gap-2">
         <div className="relative flex-1">
           <Icon
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
+            className="absolute left-3 top-1/2 -tranmuted-y-1/2 text-muted-foreground"
             size={16}
           />
           <input
@@ -78,14 +78,14 @@ function ArrayInput({
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             disabled={disabled}
-            className="w-full bg-slate-800 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+            className="w-full bg-muted border border-border rounded-lg pl-10 pr-4 py-2 text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
           />
         </div>
         <button
           type="button"
           onClick={handleAdd}
           disabled={disabled || !inputValue.trim()}
-          className="px-3 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-3 py-2 rounded-lg bg-muted hover:bg-muted-foreground text-foreground disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Plus size={18} />
         </button>
@@ -95,14 +95,14 @@ function ArrayInput({
           {values.map((value, index) => (
             <span
               key={index}
-              className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-400 text-sm"
+              className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/20 text-primary text-sm"
             >
               {value}
               {!disabled && (
                 <button
                   type="button"
                   onClick={() => handleRemove(index)}
-                  className="hover:text-cyan-200"
+                  className="hover:text-primary"
                 >
                   <X size={14} />
                 </button>
@@ -171,16 +171,16 @@ export function VisionStage({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Stage Description */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+      <div className="bg-card/50 border border-border rounded-lg p-4">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center flex-shrink-0">
-            <Lightbulb className="text-yellow-400" size={20} />
+            <Lightbulb className="text-warning" size={20} />
           </div>
           <div>
-            <h3 className="font-medium text-slate-200 mb-1">
+            <h3 className="font-medium text-foreground mb-1">
               Define Your Product Vision
             </h3>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-muted-foreground">
               Clearly articulate what your product does, who it's for, and why
               it matters. This forms the foundation for all subsequent stages.
             </p>
@@ -192,12 +192,12 @@ export function VisionStage({
       {validationErrors.length > 0 && (
         <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
+            <AlertTriangle className="text-destructive flex-shrink-0 mt-0.5" size={18} />
             <div>
-              <p className="text-red-400 font-medium text-sm mb-1">
+              <p className="text-destructive font-medium text-sm mb-1">
                 Please fix the following:
               </p>
-              <ul className="list-disc list-inside text-sm text-red-400/80 space-y-1">
+              <ul className="list-disc list-inside text-sm text-destructive/80 space-y-1">
                 {validationErrors.map((error, index) => (
                   <li key={index}>{error}</li>
                 ))}
@@ -209,8 +209,8 @@ export function VisionStage({
 
       {/* Product Name */}
       <div>
-        <label className="block text-sm font-medium text-slate-400 mb-1">
-          Product Name <span className="text-red-400">*</span>
+        <label className="block text-sm font-medium text-muted-foreground mb-1">
+          Product Name <span className="text-destructive">*</span>
         </label>
         <input
           type="text"
@@ -218,7 +218,7 @@ export function VisionStage({
           onChange={(e) => updateField('product_name', e.target.value)}
           placeholder="e.g., TaskFlow Pro"
           disabled={isProcessing}
-          className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+          className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground focus:outline-none focus:border-ring disabled:opacity-50"
         />
       </div>
 
@@ -244,12 +244,12 @@ export function VisionStage({
 
       {/* Target Users */}
       <div>
-        <label className="block text-sm font-medium text-slate-400 mb-1">
-          Target Users <span className="text-red-400">*</span>
+        <label className="block text-sm font-medium text-muted-foreground mb-1">
+          Target Users <span className="text-destructive">*</span>
         </label>
         <div className="relative">
           <Users
-            className="absolute left-3 top-3 text-slate-500"
+            className="absolute left-3 top-3 text-muted-foreground"
             size={16}
           />
           <textarea
@@ -258,19 +258,19 @@ export function VisionStage({
             placeholder="Describe your ideal users (e.g., Remote teams of 5-50 people in tech startups who struggle with async communication)"
             disabled={isProcessing}
             rows={3}
-            className="w-full bg-slate-800 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-slate-200 focus:outline-none focus:border-cyan-500 resize-none disabled:opacity-50"
+            className="w-full bg-muted border border-border rounded-lg pl-10 pr-4 py-2 text-foreground focus:outline-none focus:border-ring resize-none disabled:opacity-50"
           />
         </div>
       </div>
 
       {/* Unique Value Proposition */}
       <div>
-        <label className="block text-sm font-medium text-slate-400 mb-1">
-          Unique Value Proposition <span className="text-red-400">*</span>
+        <label className="block text-sm font-medium text-muted-foreground mb-1">
+          Unique Value Proposition <span className="text-destructive">*</span>
         </label>
         <div className="relative">
           <Lightbulb
-            className="absolute left-3 top-3 text-slate-500"
+            className="absolute left-3 top-3 text-muted-foreground"
             size={16}
           />
           <textarea
@@ -281,29 +281,29 @@ export function VisionStage({
             placeholder="What makes your product unique? (e.g., The only task manager that learns from your work patterns and automatically prioritizes based on impact)"
             disabled={isProcessing}
             rows={4}
-            className="w-full bg-slate-800 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-slate-200 focus:outline-none focus:border-cyan-500 resize-none disabled:opacity-50"
+            className="w-full bg-muted border border-border rounded-lg pl-10 pr-4 py-2 text-foreground focus:outline-none focus:border-ring resize-none disabled:opacity-50"
           />
         </div>
       </div>
 
       {/* Previous Output Feedback */}
       {lastOutput && !lastOutput.passed && (
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-          <h4 className="text-yellow-400 font-medium text-sm mb-2">
+        <div className="bg-warning/10 border border-warning/30 rounded-lg p-4">
+          <h4 className="text-warning font-medium text-sm mb-2">
             Feedback from Iteration {lastOutput.iteration}
           </h4>
-          <p className="text-slate-400 text-sm">{typeof lastOutput.feedback === "string" ? lastOutput.feedback : ""}</p>
+          <p className="text-muted-foreground text-sm">{typeof lastOutput.feedback === "string" ? lastOutput.feedback : ""}</p>
           {lastOutput.criteria_results && (
             <div className="mt-3 space-y-1">
               {Object.entries(lastOutput.criteria_results).map(([key, passed]) => (
                 <div
                   key={key}
                   className={`text-xs flex items-center gap-2 ${
-                    passed ? 'text-green-400' : 'text-red-400'
+                    passed ? 'text-success' : 'text-destructive'
                   }`}
                 >
                   <span>{passed ? 'Pass' : 'Fail'}</span>
-                  <span className="text-slate-500">{key.replace(/_/g, ' ')}</span>
+                  <span className="text-muted-foreground">{key.replace(/_/g, ' ')}</span>
                 </div>
               ))}
             </div>
@@ -312,11 +312,11 @@ export function VisionStage({
       )}
 
       {/* Submit Button */}
-      <div className="flex justify-end pt-4 border-t border-slate-800">
+      <div className="flex justify-end pt-4 border-t border-border">
         <button
           type="submit"
           disabled={isProcessing}
-          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary hover:bg-primary text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isProcessing ? (
             <>
