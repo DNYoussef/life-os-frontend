@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Plus, Play, Pencil, Trash2, Clock, RefreshCw, X, Search, LayoutGrid, List } from 'lucide-react';
 import type { Task, TaskStatus, CreateTaskRequest } from '../types';
-import { getTasks, createTask, deleteTask, runTask } from '../services/api';
+import { getTasks, createTask, deleteTask, runTask, updateTask } from '../services/api';
 import { KanbanBoard } from '../components/kanban';
 import { AppStateBanner } from '../components/ui/AppStateBanner';
+import { useKanbanStore } from '../stores';
 
 // Status Badge Component
 function StatusBadge({ status }: { status: TaskStatus }) {
@@ -115,14 +116,175 @@ function CreateTaskModal({
   );
 }
 
+// Edit Task Modal
+function EditTaskModal({
+  isOpen,
+  task,
+  onClose,
+  onSubmit,
+  isSubmitting
+}: {
+  isOpen: boolean;
+  task: Task | null;
+  onClose: () => void;
+  onSubmit: (id: string, data: Partial<CreateTaskRequest>) => void;
+  isSubmitting: boolean;
+}) {
+  const [name, setName] = useState('');
+  const [skillName, setSkillName] = useState('');
+  const [cronExpression, setCronExpression] = useState('');
+  const [priority, setPriority] = useState<'low' | 'medium' | 'high' | ''>('');
+  const [description, setDescription] = useState('');
+
+  // Populate form when task changes
+  useEffect(() => {
+    if (task) {
+      setName(task.name);
+      setSkillName(task.skill_name);
+      setCronExpression(task.cron_expression);
+      setPriority(task.priority || '');
+      setDescription(task.description || '');
+    }
+  }, [task]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!task) return;
+
+    onSubmit(task.id, {
+      name,
+      skill_name: skillName,
+      cron_expression: cronExpression,
+      priority: priority || undefined,
+      description: description || undefined,
+    });
+  };
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  if (!isOpen || !task) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="bg-surface-primary border border-border-default rounded-lg p-6 w-full max-w-md shadow-xl">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold text-text-primary">Edit Task</h2>
+          <button
+            onClick={handleClose}
+            disabled={isSubmitting}
+            className="text-text-secondary hover:text-text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500 rounded-lg p-1 disabled:opacity-50"
+            aria-label="Close modal"
+          >
+            <X size={20} />
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Task Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              disabled={isSubmitting}
+              className="w-full bg-surface-elevated border border-border-default rounded-lg px-3 py-2 text-text-primary focus:outline-none focus:border-accent-500 transition-colors disabled:opacity-50"
+              placeholder="Morning Brief"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Skill Name</label>
+            <input
+              type="text"
+              value={skillName}
+              onChange={(e) => setSkillName(e.target.value)}
+              disabled={isSubmitting}
+              className="w-full bg-surface-elevated border border-border-default rounded-lg px-3 py-2 text-text-primary focus:outline-none focus:border-accent-500 transition-colors disabled:opacity-50"
+              placeholder="cascade-orchestrator"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Cron Expression</label>
+            <input
+              type="text"
+              value={cronExpression}
+              onChange={(e) => setCronExpression(e.target.value)}
+              disabled={isSubmitting}
+              className="w-full bg-surface-elevated border border-border-default rounded-lg px-3 py-2 text-text-primary font-mono focus:outline-none focus:border-accent-500 transition-colors disabled:opacity-50"
+              placeholder="0 6 * * *"
+              required
+            />
+            <p className="text-xs text-text-muted mt-1">Format: minute hour day month weekday</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Priority</label>
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value as 'low' | 'medium' | 'high' | '')}
+              disabled={isSubmitting}
+              className="w-full bg-surface-elevated border border-border-default rounded-lg px-3 py-2 text-text-primary focus:outline-none focus:border-accent-500 transition-colors disabled:opacity-50"
+            >
+              <option value="">None</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Description</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              disabled={isSubmitting}
+              className="w-full bg-surface-elevated border border-border-default rounded-lg px-3 py-2 text-text-primary focus:outline-none focus:border-accent-500 transition-colors resize-none disabled:opacity-50"
+              placeholder="Optional task description..."
+              rows={3}
+            />
+          </div>
+          <div className="flex justify-end gap-3 pt-2">
+            <button
+              type="button"
+              onClick={handleClose}
+              disabled={isSubmitting}
+              className="px-4 py-2 rounded-lg border border-border-default text-text-secondary hover:bg-surface-elevated transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500 disabled:opacity-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="px-4 py-2 rounded-lg bg-accent-600 hover:bg-accent-500 text-white font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 focus:ring-offset-surface-primary disabled:opacity-50 flex items-center gap-2"
+            >
+              {isSubmitting ? (
+                <>
+                  <RefreshCw className="animate-spin" size={16} />
+                  Saving...
+                </>
+              ) : (
+                'Save Changes'
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 // Main TasksPage Component
 export function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'list' | 'kanban'>('kanban');
+  const { updateTask: updateTaskInStore } = useKanbanStore();
 
   const fetchTasks = async () => {
     try {
@@ -184,6 +346,41 @@ export function TasksPage() {
       setTasks(tasks.map(t => t.id === id ? updated : t));
     } catch {
       setTasks(tasks.map(t => t.id === id ? { ...t, status: 'running' as TaskStatus } : t));
+    }
+  };
+
+  const handleEditTask = (task: Task) => {
+    setEditingTask(task);
+    setShowEditModal(true);
+  };
+
+  const handleUpdateTask = async (id: string, data: Partial<CreateTaskRequest>) => {
+    setIsUpdating(true);
+    try {
+      const updated = await updateTask(id, data);
+      // Update in list view state
+      setTasks(tasks.map(t => t.id === id ? updated : t));
+      // Update in kanban store
+      updateTaskInStore(id, updated);
+      setShowEditModal(false);
+      setEditingTask(null);
+    } catch (err) {
+      // Optimistic update for demo mode
+      const updates: Partial<Task> = {
+        name: data.name,
+        skill_name: data.skill_name,
+        cron_expression: data.cron_expression,
+        priority: data.priority,
+        description: data.description,
+        updated_at: new Date().toISOString(),
+      };
+      const updatedTask: Task = { ...editingTask!, ...updates };
+      setTasks(tasks.map(t => t.id === id ? updatedTask : t));
+      updateTaskInStore(id, updates);
+      setShowEditModal(false);
+      setEditingTask(null);
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -278,12 +475,9 @@ export function TasksPage() {
       {/* Kanban View */}
       {viewMode === 'kanban' && (
         <KanbanBoard
-          onEditTask={(task) => console.log('Edit task:', task)}
+          onEditTask={handleEditTask}
           onDeleteTask={handleDeleteTask}
-          onAddTask={(columnId) => {
-            console.log('Add task to column:', columnId);
-            setShowCreateModal(true);
-          }}
+          onAddTask={() => setShowCreateModal(true)}
         />
       )}
 
@@ -342,6 +536,7 @@ export function TasksPage() {
                         <Play size={16} />
                       </button>
                       <button
+                        onClick={() => handleEditTask(task)}
                         className="p-2 rounded-lg hover:bg-surface-overlay text-text-secondary hover:text-accent-400 transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500"
                         title="Edit"
                         aria-label={`Edit ${task.name}`}
@@ -380,6 +575,18 @@ export function TasksPage() {
         isOpen={showCreateModal}
         onClose={() => setShowCreateModal(false)}
         onSubmit={handleCreateTask}
+      />
+
+      {/* Edit Modal */}
+      <EditTaskModal
+        isOpen={showEditModal}
+        task={editingTask}
+        onClose={() => {
+          setShowEditModal(false);
+          setEditingTask(null);
+        }}
+        onSubmit={handleUpdateTask}
+        isSubmitting={isUpdating}
       />
     </div>
   );
