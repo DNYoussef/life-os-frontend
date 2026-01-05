@@ -230,48 +230,17 @@ export function ProjectsPage() {
       setProjects(response.items || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch projects');
-      // Use mock data for demo
       setProjects([
-        {
-          id: '1',
-          name: 'Life OS Dashboard',
-          description: 'Build and deploy personal AI infrastructure',
-          task_count: 12,
-          completed_count: 9,
-          tasks: [
-            { id: 't1', name: 'Backend API Setup', skill_name: 'fastapi-init', cron_expression: '', status: 'completed', next_run_at: null, last_run_at: null, created_at: '', updated_at: '' },
-            { id: 't2', name: 'Frontend React App', skill_name: 'react-setup', cron_expression: '', status: 'completed', next_run_at: null, last_run_at: null, created_at: '', updated_at: '' },
-            { id: 't3', name: 'Railway Deployment', skill_name: 'deploy-railway', cron_expression: '', status: 'completed', next_run_at: null, last_run_at: null, created_at: '', updated_at: '' },
-            { id: 't4', name: 'UI Components', skill_name: 'ui-design', cron_expression: '', status: 'running', next_run_at: null, last_run_at: null, created_at: '', updated_at: '' },
-            { id: 't5', name: 'Mobile PWA', skill_name: 'pwa-setup', cron_expression: '', status: 'pending', next_run_at: null, last_run_at: null, created_at: '', updated_at: '' },
-          ],
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-        {
-          id: '2',
-          name: 'Content Pipeline',
-          description: 'Weekly zeitgeist analysis and blog generation',
-          task_count: 8,
-          completed_count: 5,
-          tasks: [
-            { id: 't6', name: 'YouTube Transcription', skill_name: 'whisper-transcribe', cron_expression: '0 6 * * 0', status: 'completed', next_run_at: null, last_run_at: null, created_at: '', updated_at: '' },
-            { id: 't7', name: 'Multi-Model Analysis', skill_name: 'consensus-engine', cron_expression: '0 7 * * 0', status: 'completed', next_run_at: null, last_run_at: null, created_at: '', updated_at: '' },
-            { id: 't8', name: 'Blog Draft Generation', skill_name: 'blog-writer', cron_expression: '0 8 * * 0', status: 'pending', next_run_at: null, last_run_at: null, created_at: '', updated_at: '' },
-          ],
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-        {
-          id: '3',
-          name: 'Trader AI',
-          description: 'Automated trading system with sentiment analysis',
-          task_count: 6,
-          completed_count: 2,
-          tasks: [],
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
+        { id: 's1', name: 'S1: Content Pipeline', description: '11-phase YouTube-to-blog with multi-model consensus', task_count: 11, completed_count: 9, tasks: [], created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: 's2', name: 'S2: Thought Leadership', description: 'Visual art composition & 13-dimension image gen', task_count: 6, completed_count: 5, tasks: [], created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: 's3', name: 'S3: Life OS Dashboard', description: 'FastAPI + React + Railway infrastructure', task_count: 12, completed_count: 10, tasks: [], created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: 's4', name: 'S4: Trader AI', description: 'Gary x Taleb dual momentum with gates', task_count: 10, completed_count: 4, tasks: [], created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: 's5', name: 'S5: Hackathon Automation', description: 'EV optimizer & Agent Maker 8-phase', task_count: 8, completed_count: 7, tasks: [], created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: 's6', name: 'S6: Fog Compute', description: 'Distributed compute - Rust + Node', task_count: 10, completed_count: 3, tasks: [], created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: 's7', name: 'S7: Meta-Calculus Toolkit', description: 'VERILINGUA cognitive architecture', task_count: 8, completed_count: 5, tasks: [], created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: 's8', name: 'S8: NSBU RPG App', description: 'Next.js game with injury tracker', task_count: 10, completed_count: 7, tasks: [], created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: 'i1', name: 'Memory MCP Triple System', description: '24h/7d/30d layers - ChromaDB + NetworkX', task_count: 6, completed_count: 5, tasks: [], created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+        { id: 'i2', name: 'Connascence Analyzer', description: '9 coupling types - 98.5% accuracy', task_count: 5, completed_count: 4, tasks: [], created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
       ]);
     } finally {
       setLoading(false);
@@ -328,7 +297,7 @@ export function ProjectsPage() {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold">Project Management</h1>
-          <p className="text-text-secondary text-sm">Organize tasks into projects and track progress</p>
+          <p className="text-text-secondary text-sm">8 Streams + Infrastructure - D:/Projects/</p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
