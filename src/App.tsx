@@ -9,6 +9,19 @@ import { AgentsPage } from './pages/AgentsPage'
 import { ProjectsPage } from './pages/ProjectsPage'
 import { WizardPage } from './pages/WizardPage'
 import { SimpleAskAI } from './components/SimpleAskAI/SimpleAskAI'
+import {
+  Home,
+  CheckSquare,
+  Bot,
+  FolderKanban,
+  Wand2,
+  Activity,
+  LayoutGrid,
+  GitMerge,
+  Terminal,
+  FileCheck,
+  type LucideIcon,
+} from 'lucide-react'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://life-os-dashboard-production.up.railway.app';
 
@@ -44,13 +57,12 @@ function StatusCard({ title, status, subtitle }: { title: string; status: string
 // Navigation Component
 function Navigation() {
   const location = useLocation();
-
   const navItems = [
-    { path: '/', label: 'Home' },
-    { path: '/tasks', label: 'Tasks' },
-    { path: '/agents', label: 'Agents' },
-    { path: '/projects', label: 'Projects' },
-    { path: '/wizard', label: 'Wizard' },
+    { path: '/', label: 'Home', icon: Home },
+    { path: '/tasks', label: 'Tasks', icon: CheckSquare },
+    { path: '/agents', label: 'Agents', icon: Bot },
+    { path: '/projects', label: 'Projects', icon: FolderKanban },
+    { path: '/wizard', label: 'Wizard', icon: Wand2 },
   ];
 
   return (
@@ -61,10 +73,44 @@ function Navigation() {
           to={item.path}
           className={`nav-link ${location.pathname === item.path ? 'nav-link-active' : ''}`}
         >
+          <item.icon size={16} />
           {item.label}
         </Link>
       ))}
     </nav>
+  );
+}
+
+// Feature Card Component
+function FeatureCard({ to, icon: Icon, title, description }: {
+  to: string;
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}) {
+  return (
+    <Link to={to} className="feature-card clickable">
+      <div className="feature-card-icon">
+        <Icon size={24} />
+      </div>
+      <h3>{title}</h3>
+      <p>{description}</p>
+      <span className="api-badge live">Live</span>
+    </Link>
+  );
+}
+
+// Section Header Component
+function SectionHeader({ icon: Icon, title, subtitle }: {
+  icon: LucideIcon;
+  title: string;
+  subtitle?: string;
+}) {
+  return (
+    <>
+      <h2><Icon size={20} className="section-icon" />{title}</h2>
+      {subtitle && <p className="section-subtitle">{subtitle}</p>}
+    </>
   );
 }
 
@@ -114,7 +160,7 @@ function HomePage() {
         </div>
       )}
       <section className="status-section">
-        <h2>System Status</h2>
+        <SectionHeader icon={Activity} title="System Status" />
         {loading ? (
           <div className="status-grid">
             <div className="status-card skeleton"><div className="skeleton-line"></div><div className="skeleton-line short"></div></div>
@@ -134,49 +180,51 @@ function HomePage() {
       </section>
 
       <section className="features-section">
-        <h2>Dashboard Pages</h2>
-        <p className="section-subtitle">Manage your Life OS infrastructure</p>
+        <SectionHeader icon={LayoutGrid} title="Dashboard Pages" subtitle="Manage your Life OS infrastructure" />
         <div className="features-grid">
-          <Link to="/tasks" className="feature-card clickable">
-            <h3>Task Management</h3>
-            <p>Create and track scheduled tasks with cron expressions</p>
-            <span className="api-badge live">Live</span>
-          </Link>
-          <Link to="/agents" className="feature-card clickable">
-            <h3>Agent Registry</h3>
-            <p>Monitor AI agents, metrics, and activity history</p>
-            <span className="api-badge live">Live</span>
-          </Link>
-          <Link to="/projects" className="feature-card clickable">
-            <h3>Project Management</h3>
-            <p>Organize tasks into projects with progress tracking</p>
-            <span className="api-badge live">Live</span>
-          </Link>
-          <Link to="/wizard" className="feature-card clickable">
-            <h3>Project Wizard</h3>
-            <p>7-stage Design OS workflow with Ralph Wiggum quality gates</p>
-            <span className="api-badge live">Live</span>
-          </Link>
+          <FeatureCard
+            to="/tasks"
+            icon={CheckSquare}
+            title="Task Management"
+            description="Create and track scheduled tasks with cron expressions"
+          />
+          <FeatureCard
+            to="/agents"
+            icon={Bot}
+            title="Agent Registry"
+            description="Monitor AI agents, metrics, and activity history"
+          />
+          <FeatureCard
+            to="/projects"
+            icon={FolderKanban}
+            title="Project Management"
+            description="Organize tasks into projects with progress tracking"
+          />
+          <FeatureCard
+            to="/wizard"
+            icon={Wand2}
+            title="Project Wizard"
+            description="7-stage Design OS workflow with Ralph Wiggum quality gates"
+          />
         </div>
       </section>
 
       <section className="consensus-section">
-        <h2>Multi-Model Consensus</h2>
-        <p className="section-subtitle">Run prompts through Claude, Gemini, and Codex for consensus validation</p>
+        <SectionHeader icon={GitMerge} title="Multi-Model Consensus" subtitle="Run prompts through Claude, Gemini, and Codex for consensus validation" />
         <ConsensusDisplay apiBase={API_BASE} />
       </section>
 
-      <section className="cli-section">
-        <h2>CLI Bridge</h2>
-        <p className="section-subtitle">Route AI requests to Claude, Gemini, or OpenAI</p>
-        <CLIBridge apiBase={API_BASE} />
-      </section>
+      <div className="two-column-section">
+        <section className="cli-section">
+          <SectionHeader icon={Terminal} title="CLI Bridge" subtitle="Route AI requests to Claude, Gemini, or OpenAI" />
+          <CLIBridge apiBase={API_BASE} />
+        </section>
 
-      <section className="evidence-section">
-        <h2>Evidence Trail</h2>
-        <p className="section-subtitle">Visual proof and audit records for observable learning</p>
-        <EvidenceViewer apiBase={API_BASE} />
-      </section>
+        <section className="evidence-section">
+          <SectionHeader icon={FileCheck} title="Evidence Trail" subtitle="Visual proof and audit records for observable learning" />
+          <EvidenceViewer apiBase={API_BASE} />
+        </section>
+      </div>
     </main>
   );
 }
