@@ -110,7 +110,24 @@ interface StageState {
   lastOutput?: StageOutput;
   error?: string;
 }
-
+// Helper to safely render feedback (handles object vs string from API)
+function getFeedbackText(feedback: unknown): string {
+  if (typeof feedback === 'string') return feedback;
+  if (feedback && typeof feedback === 'object') {
+    const obj = feedback as Record<string, unknown>;
+    if (typeof obj.message === 'string') return obj.message;
+    if (typeof obj.text === 'string') return obj.text;
+    if (typeof obj.detail === 'string') return obj.detail;
+    if (typeof obj.feedback === 'string') return obj.feedback;
+    if (Array.isArray(feedback)) {
+      return feedback.map(item =>
+        typeof item === 'string' ? item : JSON.stringify(item)
+      ).join(', ');
+    }
+    return '';
+  }
+  return '';
+}
 export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardProps) {
   const [project, setProject] = useState<WizardProject | null>(null);
   const [loading, setLoading] = useState(true);
@@ -533,7 +550,7 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
                 </div>
                 {currentStageState.lastOutput.feedback && (
                   <p className="text-sm text-slate-400 mt-2">
-                    {currentStageState.lastOutput.feedback}
+                    {getFeedbackText(currentStageState.lastOutput.feedback)}
                   </p>
                 )}
               </div>

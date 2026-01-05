@@ -292,7 +292,7 @@ export function VisionStage({
           <h4 className="text-yellow-400 font-medium text-sm mb-2">
             Feedback from Iteration {lastOutput.iteration}
           </h4>
-          <p className="text-slate-400 text-sm">{lastOutput.feedback}</p>
+          <p className="text-slate-400 text-sm">{typeof lastOutput.feedback === "string" ? lastOutput.feedback : ""}</p>
           {lastOutput.criteria_results && (
             <div className="mt-3 space-y-1">
               {Object.entries(lastOutput.criteria_results).map(([key, passed]) => (
