@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { Bot, Activity, Clock, TrendingUp, Filter, Search, RefreshCw, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import type { Agent, AgentStatus, AgentActivity } from '../types';
 import { getAgents, getAgentActivity } from '../services/api';
+import { AppStateBanner } from '../components/ui/AppStateBanner';
 
 // Agent Status Icon
 function AgentStatusIcon({ status }: { status: AgentStatus }) {
   const icons = {
-    active: <CheckCircle size={16} className="text-green-400" />,
-    inactive: <AlertCircle size={16} className="text-yellow-400" />,
-    error: <XCircle size={16} className="text-red-400" />,
+    active: <CheckCircle size={16} className="text-success" aria-label="Status: Active" />,
+    inactive: <AlertCircle size={16} className="text-warning" aria-label="Status: Inactive" />,
+    error: <XCircle size={16} className="text-error" aria-label="Status: Error" />,
   };
   return icons[status];
 }
@@ -16,9 +17,9 @@ function AgentStatusIcon({ status }: { status: AgentStatus }) {
 // Agent Card Component
 function AgentCard({ agent }: { agent: Agent }) {
   const statusColors: Record<AgentStatus, string> = {
-    active: 'border-green-500/30',
-    inactive: 'border-yellow-500/30',
-    error: 'border-red-500/30',
+    active: 'border-success/30 hover:border-success/50',
+    inactive: 'border-warning/30 hover:border-warning/50',
+    error: 'border-error/30 hover:border-error/50',
   };
 
   const formatDuration = (ms: number) => {
@@ -41,37 +42,43 @@ function AgentCard({ agent }: { agent: Agent }) {
   };
 
   return (
-    <div className={`bg-slate-900/50 border ${statusColors[agent.status]} rounded-lg p-4 hover:bg-slate-800/50 transition-colors`}>
+    <div
+      className={`bg-surface-primary border ${statusColors[agent.status]} rounded-lg p-4 transition-all hover:bg-surface-elevated hover:shadow-lg hover:-translate-y-0.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 focus:ring-offset-surface-base`}
+      tabIndex={0}
+      role="button"
+      aria-label={`View details for ${agent.name}`}
+      onKeyDown={(e) => e.key === 'Enter' && console.log('View agent', agent.id)}
+    >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2">
-          <Bot size={20} className="text-cyan-500" />
-          <h3 className="font-medium text-slate-200">{agent.name}</h3>
+          <Bot size={20} className="text-accent-500" />
+          <h3 className="font-medium text-text-primary">{agent.name}</h3>
         </div>
         <AgentStatusIcon status={agent.status} />
       </div>
 
-      <div className="text-sm text-slate-400 mb-4">
-        <span className="px-2 py-0.5 rounded bg-slate-800 text-xs">{agent.type}</span>
+      <div className="text-sm text-text-muted mb-4">
+        <span className="px-2 py-0.5 rounded bg-surface-base text-xs border border-border-subtle">{agent.type}</span>
       </div>
 
       <div className="grid grid-cols-2 gap-3 text-sm">
         <div>
-          <span className="text-slate-500 block">Total Runs</span>
-          <span className="text-slate-200 font-medium">{agent.total_runs.toLocaleString()}</span>
+          <span className="text-text-muted block">Total Runs</span>
+          <span className="text-text-primary font-medium">{agent.total_runs.toLocaleString()}</span>
         </div>
         <div>
-          <span className="text-slate-500 block">Success Rate</span>
-          <span className={`font-medium ${agent.success_rate >= 90 ? 'text-green-400' : agent.success_rate >= 70 ? 'text-yellow-400' : 'text-red-400'}`}>
+          <span className="text-text-muted block">Success Rate</span>
+          <span className={`font-medium ${agent.success_rate >= 90 ? 'text-success' : agent.success_rate >= 70 ? 'text-warning' : 'text-error'}`}>
             {agent.success_rate}%
           </span>
         </div>
         <div>
-          <span className="text-slate-500 block">Avg Duration</span>
-          <span className="text-slate-200 font-medium">{formatDuration(agent.avg_duration_ms)}</span>
+          <span className="text-text-muted block">Avg Duration</span>
+          <span className="text-text-primary font-medium">{formatDuration(agent.avg_duration_ms)}</span>
         </div>
         <div>
-          <span className="text-slate-500 block">Last Active</span>
-          <span className="text-slate-200 font-medium">{formatLastActive(agent.last_active_at)}</span>
+          <span className="text-text-muted block">Last Active</span>
+          <span className="text-text-primary font-medium">{formatLastActive(agent.last_active_at)}</span>
         </div>
       </div>
     </div>
@@ -83,19 +90,19 @@ function ActivityItem({ activity }: { activity: AgentActivity }) {
   const isSuccess = activity.status === 'success';
 
   return (
-    <div className="flex items-start gap-3 py-3 border-b border-slate-800 last:border-0">
-      <div className={`p-1.5 rounded-full ${isSuccess ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
-        {isSuccess ? <CheckCircle size={14} className="text-green-400" /> : <XCircle size={14} className="text-red-400" />}
+    <div className="flex items-start gap-3 py-3 border-b border-border-subtle last:border-0">
+      <div className={`p-1.5 rounded-full ${isSuccess ? 'bg-success/10' : 'bg-error/10'}`}>
+        {isSuccess ? <CheckCircle size={14} className="text-success" /> : <XCircle size={14} className="text-error" />}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex justify-between items-start">
-          <span className="font-medium text-slate-200 truncate">{activity.agent_name}</span>
-          <span className="text-xs text-slate-500 whitespace-nowrap ml-2">
+          <span className="font-medium text-text-primary truncate">{activity.agent_name}</span>
+          <span className="text-xs text-text-muted whitespace-nowrap ml-2">
             {new Date(activity.timestamp).toLocaleTimeString()}
           </span>
         </div>
-        <p className="text-sm text-slate-400">{activity.action}</p>
-        <span className="text-xs text-slate-500">{activity.duration_ms}ms</span>
+        <p className="text-sm text-text-secondary">{activity.action}</p>
+        <span className="text-xs text-text-muted">{activity.duration_ms}ms</span>
       </div>
     </div>
   );
@@ -163,16 +170,17 @@ export function AgentsPage() {
   const totalRuns = agents.reduce((sum, a) => sum + a.total_runs, 0);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 p-6">
+    <div className="min-h-screen bg-surface-base text-text-primary p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold">Agent Registry</h1>
-          <p className="text-slate-400 text-sm">Monitor AI agents, metrics, and activity</p>
+          <p className="text-text-secondary text-sm">Monitor AI agents, metrics, and activity</p>
         </div>
         <button
           onClick={fetchData}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border-default text-text-secondary hover:bg-surface-elevated hover:text-text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500"
+          aria-label="Refresh data"
         >
           <RefreshCw size={18} />
           Refresh
@@ -181,29 +189,29 @@ export function AgentsPage() {
 
       {/* Stats Overview */}
       <div className="grid grid-cols-4 gap-4 mb-6">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+        <div className="bg-surface-primary border border-border-subtle rounded-lg p-4">
+          <div className="flex items-center gap-2 text-text-muted text-sm mb-1">
             <Bot size={16} />
             Total Agents
           </div>
           <div className="text-2xl font-bold">{agents.length}</div>
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+        <div className="bg-surface-primary border border-border-subtle rounded-lg p-4">
+          <div className="flex items-center gap-2 text-text-muted text-sm mb-1">
             <Activity size={16} />
             Active
           </div>
-          <div className="text-2xl font-bold text-green-400">{activeCount}</div>
+          <div className="text-2xl font-bold text-success">{activeCount}</div>
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+        <div className="bg-surface-primary border border-border-subtle rounded-lg p-4">
+          <div className="flex items-center gap-2 text-text-muted text-sm mb-1">
             <TrendingUp size={16} />
             Avg Success Rate
           </div>
           <div className="text-2xl font-bold">{avgSuccessRate}%</div>
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+        <div className="bg-surface-primary border border-border-subtle rounded-lg p-4">
+          <div className="flex items-center gap-2 text-text-muted text-sm mb-1">
             <Clock size={16} />
             Total Runs
           </div>
@@ -214,21 +222,22 @@ export function AgentsPage() {
       {/* Search and Filters */}
       <div className="flex gap-4 mb-6">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
           <input
             type="text"
             placeholder="Search agents..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="w-full bg-surface-elevated border border-border-default rounded-lg pl-10 pr-4 py-2 text-text-primary focus:outline-none focus:border-accent-500 transition-colors"
           />
         </div>
         <div className="relative">
-          <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+          <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-8 py-2 text-slate-200 appearance-none focus:outline-none focus:border-cyan-500"
+            className="bg-surface-elevated border border-border-default rounded-lg pl-10 pr-8 py-2 text-text-primary appearance-none focus:outline-none focus:border-accent-500 cursor-pointer"
+            aria-label="Filter by agent type"
           >
             <option value="">All Types</option>
             {agentTypes.map(type => (
@@ -239,7 +248,8 @@ export function AgentsPage() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="bg-slate-900 border border-slate-800 rounded-lg px-4 py-2 text-slate-200 appearance-none focus:outline-none focus:border-cyan-500"
+          className="bg-surface-elevated border border-border-default rounded-lg px-4 py-2 text-text-primary appearance-none focus:outline-none focus:border-accent-500 cursor-pointer"
+          aria-label="Filter by status"
         >
           <option value="">All Status</option>
           <option value="active">Active</option>
@@ -248,24 +258,38 @@ export function AgentsPage() {
         </select>
       </div>
 
-      {/* Error Banner */}
+      {/* Error Banner - Using AppStateBanner instead of raw error */}
       {error && (
-        <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-6 text-red-400">
-          {error} (showing demo data)
+        <div className="mb-6">
+          <AppStateBanner
+            variant="demo"
+            title="Running in Demo Mode"
+            message="Could not connect to backend. Displaying sample data."
+            action={{
+              label: "Retry Connection",
+              onClick: fetchData
+            }}
+          />
         </div>
       )}
 
       <div className="grid grid-cols-12 gap-6">
         {/* Agent Grid */}
         <div className="col-span-8">
-          <h2 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-4">Agents ({filteredAgents.length})</h2>
+          <h2 className="text-sm font-medium text-text-muted uppercase tracking-wider mb-4">Agents ({filteredAgents.length})</h2>
           {loading ? (
             <div className="flex items-center justify-center py-12">
-              <RefreshCw className="animate-spin text-slate-500" size={24} />
+              <RefreshCw className="animate-spin text-accent-500" size={24} />
             </div>
           ) : filteredAgents.length === 0 ? (
-            <div className="text-center py-12 text-slate-500">
-              No agents found matching your filters.
+            <div className="text-center py-12">
+              <p className="text-text-muted mb-2">No agents found matching your filters.</p>
+              <button
+                onClick={() => {setSearchQuery(''); setTypeFilter(''); setStatusFilter('');}}
+                className="text-accent-500 hover:text-accent-400 text-sm font-medium"
+              >
+                Clear all filters
+              </button>
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-4">
@@ -278,10 +302,10 @@ export function AgentsPage() {
 
         {/* Activity Timeline */}
         <div className="col-span-4">
-          <h2 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-4">Recent Activity</h2>
-          <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+          <h2 className="text-sm font-medium text-text-muted uppercase tracking-wider mb-4">Recent Activity</h2>
+          <div className="bg-surface-primary border border-border-subtle rounded-lg p-4">
             {activities.length === 0 ? (
-              <div className="text-center py-8 text-slate-500">No recent activity</div>
+              <div className="text-center py-8 text-text-muted">No recent activity</div>
             ) : (
               activities.map(activity => (
                 <ActivityItem key={activity.id} activity={activity} />

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { FolderKanban, Plus, ChevronDown, ChevronRight, CheckCircle, Circle, Clock, Search, RefreshCw, X, Trash2, Pencil } from 'lucide-react';
 import type { Project, Task, CreateProjectRequest } from '../types';
 import { getProjects, createProject, deleteProject } from '../services/api';
+import { AppStateBanner } from '../components/ui/AppStateBanner';
 
 // Progress Bar Component
 function ProgressBar({ completed, total }: { completed: number; total: number }) {
@@ -9,15 +10,15 @@ function ProgressBar({ completed, total }: { completed: number; total: number })
 
   return (
     <div className="flex items-center gap-3">
-      <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+      <div className="flex-1 h-2 bg-surface-elevated rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full transition-all ${
-            percentage === 100 ? 'bg-green-500' : percentage > 50 ? 'bg-cyan-500' : 'bg-yellow-500'
+            percentage === 100 ? 'bg-success' : percentage > 50 ? 'bg-accent-500' : 'bg-warning'
           }`}
           style={{ width: `${percentage}%` }}
         />
       </div>
-      <span className="text-sm font-medium text-slate-400 w-12 text-right">{percentage}%</span>
+      <span className="text-sm font-medium text-text-secondary w-12 text-right">{percentage}%</span>
     </div>
   );
 }
@@ -27,18 +28,21 @@ function TaskItem({ task }: { task: Task }) {
   const isCompleted = task.status === 'completed';
 
   return (
-    <div className={`flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-slate-800/50 ${isCompleted ? 'opacity-60' : ''}`}>
+    <div
+      className={`flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-surface-elevated ${isCompleted ? 'opacity-60' : ''}`}
+      role="listitem"
+    >
       {isCompleted ? (
-        <CheckCircle size={16} className="text-green-400" />
+        <CheckCircle size={16} className="text-success" aria-label="Completed" />
       ) : task.status === 'running' ? (
-        <Clock size={16} className="text-blue-400 animate-pulse" />
+        <Clock size={16} className="text-info animate-pulse" aria-label="Running" />
       ) : (
-        <Circle size={16} className="text-slate-500" />
+        <Circle size={16} className="text-text-muted" aria-label="Pending" />
       )}
-      <span className={`flex-1 text-sm ${isCompleted ? 'line-through text-slate-500' : 'text-slate-300'}`}>
+      <span className={`flex-1 text-sm ${isCompleted ? 'line-through text-text-muted' : 'text-text-secondary'}`}>
         {task.name}
       </span>
-      <span className="text-xs text-slate-500 font-mono">{task.skill_name}</span>
+      <span className="text-xs text-text-muted font-mono">{task.skill_name}</span>
     </div>
   );
 }
@@ -57,35 +61,42 @@ function ProjectCard({
     : 0;
 
   return (
-    <div className="bg-slate-900/50 border border-slate-800 rounded-lg overflow-hidden">
+    <div className="bg-surface-primary border border-border-subtle rounded-lg overflow-hidden">
       {/* Header */}
       <div
-        className="p-4 cursor-pointer hover:bg-slate-800/50 transition-colors"
+        className="p-4 cursor-pointer hover:bg-surface-elevated transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-inset"
         onClick={() => setIsExpanded(!isExpanded)}
+        onKeyDown={(e) => e.key === 'Enter' && setIsExpanded(!isExpanded)}
+        tabIndex={0}
+        role="button"
+        aria-expanded={isExpanded}
+        aria-label={`${project.name} project, ${percentage}% complete`}
       >
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <button className="text-slate-400">
+            <button className="text-text-secondary" aria-hidden="true">
               {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
             </button>
-            <FolderKanban size={20} className="text-cyan-500" />
+            <FolderKanban size={20} className="text-accent-500" />
             <div>
-              <h3 className="font-medium text-slate-200">{project.name}</h3>
+              <h3 className="font-medium text-text-primary">{project.name}</h3>
               {project.description && (
-                <p className="text-sm text-slate-500 mt-0.5">{project.description}</p>
+                <p className="text-sm text-text-muted mt-0.5">{project.description}</p>
               )}
             </div>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={(e) => { e.stopPropagation(); }}
-              className="p-2 rounded-lg hover:bg-slate-700 text-slate-400 hover:text-cyan-400 transition-colors"
+              className="p-2 rounded-lg hover:bg-surface-overlay text-text-secondary hover:text-accent-400 transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500"
+              aria-label="Edit project"
             >
               <Pencil size={14} />
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); onDelete(project.id); }}
-              className="p-2 rounded-lg hover:bg-slate-700 text-slate-400 hover:text-red-400 transition-colors"
+              className="p-2 rounded-lg hover:bg-surface-overlay text-text-secondary hover:text-error transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500"
+              aria-label="Delete project"
             >
               <Trash2 size={14} />
             </button>
@@ -94,9 +105,9 @@ function ProjectCard({
 
         {/* Progress */}
         <div className="mt-4 ml-11">
-          <div className="flex justify-between text-sm text-slate-400 mb-2">
+          <div className="flex justify-between text-sm text-text-secondary mb-2">
             <span>{project.completed_count} of {project.task_count} tasks completed</span>
-            <span className={`font-medium ${percentage === 100 ? 'text-green-400' : ''}`}>
+            <span className={`font-medium ${percentage === 100 ? 'text-success' : ''}`}>
               {percentage}%
             </span>
           </div>
@@ -106,7 +117,7 @@ function ProjectCard({
 
       {/* Tasks List (Expanded) */}
       {isExpanded && project.tasks && project.tasks.length > 0 && (
-        <div className="border-t border-slate-800 p-4 bg-slate-900/30">
+        <div className="border-t border-border-subtle p-4 bg-surface-base" role="list" aria-label="Project tasks">
           <div className="space-y-1">
             {project.tasks.map(task => (
               <TaskItem key={task.id} task={task} />
@@ -116,7 +127,7 @@ function ProjectCard({
       )}
 
       {isExpanded && (!project.tasks || project.tasks.length === 0) && (
-        <div className="border-t border-slate-800 p-4 bg-slate-900/30 text-center text-slate-500 text-sm">
+        <div className="border-t border-border-subtle p-4 bg-surface-base text-center text-text-muted text-sm">
           No tasks in this project yet
         </div>
       )}
@@ -149,31 +160,35 @@ function CreateProjectModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-slate-900 border border-slate-700 rounded-lg p-6 w-full max-w-md">
+      <div className="bg-surface-primary border border-border-default rounded-lg p-6 w-full max-w-md shadow-xl">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-slate-200">Create New Project</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-200">
+          <h2 className="text-xl font-bold text-text-primary">Create New Project</h2>
+          <button
+            onClick={onClose}
+            className="text-text-secondary hover:text-text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500 rounded-lg p-1"
+            aria-label="Close modal"
+          >
             <X size={20} />
           </button>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Project Name</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Project Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-500"
+              className="w-full bg-surface-elevated border border-border-default rounded-lg px-3 py-2 text-text-primary focus:outline-none focus:border-accent-500 transition-colors"
               placeholder="Life OS Dashboard"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Description (optional)</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Description (optional)</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-500 resize-none"
+              className="w-full bg-surface-elevated border border-border-default rounded-lg px-3 py-2 text-text-primary focus:outline-none focus:border-accent-500 resize-none transition-colors"
               placeholder="Build and deploy personal AI infrastructure"
               rows={3}
             />
@@ -182,13 +197,13 @@ function CreateProjectModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800"
+              className="px-4 py-2 rounded-lg border border-border-default text-text-secondary hover:bg-surface-elevated transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium"
+              className="px-4 py-2 rounded-lg bg-accent-600 hover:bg-accent-500 text-white font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 focus:ring-offset-surface-primary"
             >
               Create Project
             </button>
@@ -308,16 +323,16 @@ export function ProjectsPage() {
   const overallProgress = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 p-6">
+    <div className="min-h-screen bg-surface-base text-text-primary p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold">Project Management</h1>
-          <p className="text-slate-400 text-sm">Organize tasks into projects and track progress</p>
+          <p className="text-text-secondary text-sm">Organize tasks into projects and track progress</p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-accent-600 hover:bg-accent-500 text-white font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 focus:ring-offset-surface-base"
         >
           <Plus size={18} />
           New Project
@@ -326,20 +341,20 @@ export function ProjectsPage() {
 
       {/* Stats Overview */}
       <div className="grid grid-cols-4 gap-4 mb-6">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <div className="text-slate-400 text-sm mb-1">Total Projects</div>
+        <div className="bg-surface-primary border border-border-subtle rounded-lg p-4">
+          <div className="text-text-muted text-sm mb-1">Total Projects</div>
           <div className="text-2xl font-bold">{projects.length}</div>
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <div className="text-slate-400 text-sm mb-1">Total Tasks</div>
+        <div className="bg-surface-primary border border-border-subtle rounded-lg p-4">
+          <div className="text-text-muted text-sm mb-1">Total Tasks</div>
           <div className="text-2xl font-bold">{totalTasks}</div>
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <div className="text-slate-400 text-sm mb-1">Completed</div>
-          <div className="text-2xl font-bold text-green-400">{completedTasks}</div>
+        <div className="bg-surface-primary border border-border-subtle rounded-lg p-4">
+          <div className="text-text-muted text-sm mb-1">Completed</div>
+          <div className="text-2xl font-bold text-success">{completedTasks}</div>
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <div className="text-slate-400 text-sm mb-1">Overall Progress</div>
+        <div className="bg-surface-primary border border-border-subtle rounded-lg p-4">
+          <div className="text-text-muted text-sm mb-1">Overall Progress</div>
           <div className="text-2xl font-bold">{overallProgress}%</div>
         </div>
       </div>
@@ -347,18 +362,19 @@ export function ProjectsPage() {
       {/* Search and Actions */}
       <div className="flex gap-4 mb-6">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
           <input
             type="text"
             placeholder="Search projects..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="w-full bg-surface-elevated border border-border-default rounded-lg pl-10 pr-4 py-2 text-text-primary focus:outline-none focus:border-accent-500 transition-colors"
           />
         </div>
         <button
           onClick={fetchProjects}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border-default text-text-secondary hover:bg-surface-elevated transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500"
+          aria-label="Refresh projects"
         >
           <RefreshCw size={18} />
           Refresh
@@ -367,18 +383,26 @@ export function ProjectsPage() {
 
       {/* Error Banner */}
       {error && (
-        <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-6 text-red-400">
-          {error} (showing demo data)
+        <div className="mb-6">
+          <AppStateBanner
+            variant="demo"
+            title="Running in Demo Mode"
+            message="Could not connect to backend. Displaying sample projects."
+            action={{
+              label: "Retry Connection",
+              onClick: fetchProjects
+            }}
+          />
         </div>
       )}
 
       {/* Projects List */}
       {loading ? (
         <div className="flex items-center justify-center py-12">
-          <RefreshCw className="animate-spin text-slate-500" size={24} />
+          <RefreshCw className="animate-spin text-accent-500" size={24} />
         </div>
       ) : filteredProjects.length === 0 ? (
-        <div className="text-center py-12 text-slate-500">
+        <div className="text-center py-12 text-text-muted">
           No projects found. Create your first project to get started.
         </div>
       ) : (

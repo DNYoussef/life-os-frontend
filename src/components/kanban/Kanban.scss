@@ -1,16 +1,16 @@
-// Kanban Board Styles
+// Kanban Board Styles - Dark Theme
 .kanban-board {
-  padding: 1rem;
+  padding: var(--space-4);
   min-height: calc(100vh - 200px);
-  background: #f8fafc;
-  border-radius: 8px;
+  background: var(--color-bg-base);
+  border-radius: var(--radius-md);
 }
 
 .kanban-columns {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
   overflow-x: auto;
-  padding-bottom: 1rem;
+  padding-bottom: var(--space-4);
 }
 
 .kanban-loading,
@@ -20,27 +20,27 @@
   align-items: center;
   justify-content: center;
   min-height: 300px;
-  gap: 1rem;
+  gap: var(--space-4);
 
   .loading-spinner {
     width: 40px;
     height: 40px;
-    border: 3px solid #e2e8f0;
-    border-top-color: #3b82f6;
+    border: 3px solid var(--color-border-subtle);
+    border-top-color: var(--color-accent);
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
 
   button {
     padding: 0.5rem 1rem;
-    background: #3b82f6;
+    background: var(--color-accent);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
 
     &:hover {
-      background: #2563eb;
+      background: var(--color-accent-hover);
     }
   }
 }
@@ -52,23 +52,24 @@
 // Kanban Column Styles
 .kanban-column {
   flex: 0 0 300px;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 250px);
   transition: background 0.2s;
 
   &.drag-over {
-    background: #f0f9ff;
+    background: var(--color-bg-elevated);
   }
 }
 
 .column-header {
-  padding: 1rem;
+  padding: var(--space-4);
   border-top: 3px solid;
-  border-radius: 8px 8px 0 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -88,13 +89,13 @@
   .column-title {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #1e293b;
+    color: var(--color-text-primary);
     margin: 0;
   }
 
   .task-count {
-    background: #e2e8f0;
-    color: #64748b;
+    background: var(--color-bg-elevated);
+    color: var(--color-text-secondary);
     padding: 0.125rem 0.5rem;
     border-radius: 10px;
     font-size: 0.75rem;
@@ -105,8 +106,8 @@
     width: 24px;
     height: 24px;
     border: none;
-    background: #e2e8f0;
-    color: #64748b;
+    background: var(--color-bg-elevated);
+    color: var(--color-text-secondary);
     border-radius: 4px;
     cursor: pointer;
     font-size: 1rem;
@@ -116,8 +117,8 @@
     justify-content: center;
 
     &:hover {
-      background: #cbd5e1;
-      color: #475569;
+      background: var(--color-border-default);
+      color: var(--color-text-primary);
     }
   }
 }
@@ -137,7 +138,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   text-align: center;
 
   p {
@@ -147,30 +148,30 @@
   .add-first-task {
     padding: 0.5rem 1rem;
     background: transparent;
-    border: 1px dashed #cbd5e1;
-    color: #64748b;
+    border: 1px dashed var(--color-border-default);
+    color: var(--color-text-secondary);
     border-radius: 4px;
     cursor: pointer;
 
     &:hover {
-      border-color: #94a3b8;
-      color: #475569;
+      border-color: var(--color-text-secondary);
+      color: var(--color-text-primary);
     }
   }
 }
 
 // Kanban Card Styles
 .kanban-card {
-  background: white;
-  border: 1px solid #e2e8f0;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
   border-radius: 6px;
   padding: 0.75rem;
   cursor: grab;
   transition: all 0.2s;
 
   &:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-color: var(--color-accent);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   &.dragging {
@@ -192,7 +193,7 @@
   .card-title {
     font-size: 0.875rem;
     font-weight: 500;
-    color: #1e293b;
+    color: var(--color-text-primary);
     margin: 0;
     line-height: 1.3;
   }
@@ -209,7 +210,7 @@
 
 .card-body {
   font-size: 0.75rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
 
   .card-skill,
   .card-schedule,
@@ -219,15 +220,15 @@
     margin-bottom: 0.25rem;
 
     .label {
-      color: #94a3b8;
+      color: var(--color-text-muted);
     }
 
     .value {
-      color: #475569;
+      color: var(--color-text-secondary);
     }
 
     code {
-      background: #f1f5f9;
+      background: var(--color-bg-base);
       padding: 0 0.25rem;
       border-radius: 2px;
       font-family: monospace;
@@ -240,33 +241,33 @@
   gap: 0.5rem;
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid var(--color-border-subtle);
 
   .action-btn {
     flex: 1;
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
-    border: 1px solid #e2e8f0;
-    background: white;
+    border: 1px solid var(--color-border-default);
+    background: transparent;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.15s;
 
     &.edit {
-      color: #3b82f6;
+      color: var(--color-info);
 
       &:hover {
-        background: #eff6ff;
-        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.1);
+        border-color: var(--color-info);
       }
     }
 
     &.delete {
-      color: #ef4444;
+      color: var(--color-error);
 
       &:hover {
-        background: #fef2f2;
-        border-color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+        border-color: var(--color-error);
       }
     }
   }
