@@ -1,7 +1,6 @@
-import type { ReactNode } from 'react';
 import type { QAStatus, QAStatusResponse } from '../../types/qa';
 import { Badge, StatusDot } from '../ui/Badge';
-import { ProgressBar, CircularProgress } from '../ui/ProgressBar';
+import { ProgressBar } from '../ui/ProgressBar';
 import { Card } from '../ui/Card';
 
 interface QAStatusCardProps {
@@ -31,9 +30,6 @@ export function QAStatusCard({
   className = '',
 }: QAStatusCardProps) {
   const config = statusConfig[status.current_status];
-  const progressPercentage = status.max_iterations > 0
-    ? (status.iteration_count / status.max_iterations) * 100
-    : 0;
 
   return (
     <Card variant="elevated" className={`${className}`}>

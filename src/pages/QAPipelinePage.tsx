@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { RefreshCw, Play, FolderOpen, AlertTriangle, CheckCircle2, Settings } from 'lucide-react';
+import { RefreshCw, Play, FolderOpen, AlertTriangle, Settings } from 'lucide-react';
 import type {
   QAStatusResponse,
   QAHistoryResponse,
@@ -25,7 +25,6 @@ import {
 import {
   QAStatusCard,
   QAMetricsSummary,
-  QAIssueList,
   QAIterationList,
   MostCommonIssues,
   RecoveryStatusCard,
