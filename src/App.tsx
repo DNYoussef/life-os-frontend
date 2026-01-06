@@ -8,6 +8,7 @@ import { TasksPage } from './pages/TasksPage'
 import { AgentsPage } from './pages/AgentsPage'
 import { ProjectsPage } from './pages/ProjectsPage'
 import { WizardPage } from './pages/WizardPage'
+import { QAPipelinePage } from './pages/QAPipelinePage'
 import { SimpleAskAI } from './components/SimpleAskAI/SimpleAskAI'
 import {
   Home,
@@ -20,6 +21,7 @@ import {
   GitMerge,
   Terminal,
   FileCheck,
+  ShieldCheck,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -62,6 +64,7 @@ function Navigation() {
     { path: '/tasks', label: 'Tasks', icon: CheckSquare },
     { path: '/agents', label: 'Agents', icon: Bot },
     { path: '/projects', label: 'Projects', icon: FolderKanban },
+    { path: '/qa', label: 'QA Pipeline', icon: ShieldCheck },
     { path: '/wizard', label: 'Wizard', icon: Wand2 },
   ];
 
@@ -206,6 +209,12 @@ function HomePage() {
             title="Project Wizard"
             description="7-stage Design OS workflow with Ralph Wiggum quality gates"
           />
+          <FeatureCard
+            to="/qa"
+            icon={ShieldCheck}
+            title="QA Pipeline"
+            description="Automated code quality validation with recovery management"
+          />
         </div>
       </section>
 
@@ -246,6 +255,7 @@ function AppContent() {
         <Route path="/tasks" element={<TasksPage />} />
         <Route path="/agents" element={<AgentsPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/qa" element={<QAPipelinePage />} />
         <Route path="/wizard" element={<WizardPage />} />
       </Routes>
       <footer className="footer">
