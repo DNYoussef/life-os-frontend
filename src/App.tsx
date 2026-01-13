@@ -9,7 +9,14 @@ import { AgentsPage } from './pages/AgentsPage'
 import { ProjectsPage } from './pages/ProjectsPage'
 import { WizardPage } from './pages/WizardPage'
 import { QAPipelinePage } from './pages/QAPipelinePage'
+import { NotesPage } from './pages/NotesPage'
+import { IdeasPage } from './pages/IdeasPage'
+import { CalendarPage } from './pages/CalendarPage'
+import { MemoryPage } from './pages/MemoryPage'
+import { PipelineDesignerPage } from './pages/PipelineDesignerPage'
+import { ManagerPage } from './pages/ManagerPage'
 import { SimpleAskAI } from './components/SimpleAskAI/SimpleAskAI'
+import { UnifiedDashboard } from './components/UnifiedDashboard'
 import {
   Home,
   CheckSquare,
@@ -22,10 +29,15 @@ import {
   Terminal,
   FileCheck,
   ShieldCheck,
+  StickyNote,
+  Lightbulb,
+  Calendar,
+  Brain,
+  Workflow,
   type LucideIcon,
 } from 'lucide-react'
 
-const API_BASE = import.meta.env.VITE_API_URL || 'https://life-os-dashboard-production.up.railway.app';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
 interface HealthResponse {
   status: string;
@@ -61,11 +73,17 @@ function Navigation() {
   const location = useLocation();
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
+    { path: '/calendar', label: 'Calendar', icon: Calendar },
+    { path: '/notes', label: 'Notes', icon: StickyNote },
+    { path: '/ideas', label: 'Ideas', icon: Lightbulb },
     { path: '/tasks', label: 'Tasks', icon: CheckSquare },
-    { path: '/agents', label: 'Agents', icon: Bot },
     { path: '/projects', label: 'Projects', icon: FolderKanban },
-    { path: '/qa', label: 'QA Pipeline', icon: ShieldCheck },
+    { path: '/agents', label: 'Agents', icon: Bot },
+    { path: '/memory', label: 'Memory', icon: Brain },
+    { path: '/qa', label: 'QA', icon: ShieldCheck },
     { path: '/wizard', label: 'Wizard', icon: Wand2 },
+    { path: '/pipelines', label: 'Pipelines', icon: Workflow },
+    { path: '/manager', label: 'Manager', icon: Terminal },
   ];
 
   return (
@@ -183,7 +201,31 @@ function HomePage() {
       </section>
 
       <section className="features-section">
-        <SectionHeader icon={LayoutGrid} title="Dashboard Pages" subtitle="Manage your Life OS infrastructure" />
+        <SectionHeader icon={LayoutGrid} title="Personal Productivity" subtitle="Manage your schedule, notes, and ideas" />
+        <div className="features-grid">
+          <FeatureCard
+            to="/calendar"
+            icon={Calendar}
+            title="Calendar"
+            description="Schedule events with Google Calendar sync support"
+          />
+          <FeatureCard
+            to="/notes"
+            icon={StickyNote}
+            title="Notes"
+            description="Capture and organize your thoughts with Markdown support"
+          />
+          <FeatureCard
+            to="/ideas"
+            icon={Lightbulb}
+            title="Ideas"
+            description="Track and validate ideas with Kanban-style workflow"
+          />
+        </div>
+      </section>
+
+      <section className="features-section">
+        <SectionHeader icon={LayoutGrid} title="Development Tools" subtitle="Manage projects and automation" />
         <div className="features-grid">
           <FeatureCard
             to="/tasks"
@@ -192,16 +234,16 @@ function HomePage() {
             description="Create and track scheduled tasks with cron expressions"
           />
           <FeatureCard
-            to="/agents"
-            icon={Bot}
-            title="Agent Registry"
-            description="Monitor AI agents, metrics, and activity history"
-          />
-          <FeatureCard
             to="/projects"
             icon={FolderKanban}
             title="Project Management"
             description="Organize tasks into projects with progress tracking"
+          />
+          <FeatureCard
+            to="/agents"
+            icon={Bot}
+            title="Agent Registry"
+            description="Monitor AI agents, metrics, and activity history"
           />
           <FeatureCard
             to="/wizard"
@@ -213,7 +255,7 @@ function HomePage() {
             to="/qa"
             icon={ShieldCheck}
             title="QA Pipeline"
-            description="Automated code quality validation with recovery management"
+            description="Run QA locally via claude-dev CLI (see instructions)"
           />
         </div>
       </section>
@@ -251,12 +293,18 @@ function AppContent() {
         <Navigation />
       </header>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<UnifiedDashboard />} />
+        <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/notes" element={<NotesPage />} />
+        <Route path="/ideas" element={<IdeasPage />} />
         <Route path="/tasks" element={<TasksPage />} />
         <Route path="/agents" element={<AgentsPage />} />
+        <Route path="/memory" element={<MemoryPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/qa" element={<QAPipelinePage />} />
         <Route path="/wizard" element={<WizardPage />} />
+        <Route path="/pipelines" element={<PipelineDesignerPage />} />
+        <Route path="/manager" element={<ManagerPage />} />
       </Routes>
       <footer className="footer">
         <p>Life OS Integration Project</p>

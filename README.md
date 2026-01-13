@@ -1,5 +1,16 @@
 # React + TypeScript + Vite
 
+## Canonical Status
+
+<!-- STATUS:START -->
+Canonical status from `2026-EXOSKELETON-STATUS.json`.
+
+Status: 88% (source: implementation-plan)
+Registry refreshed: 2026-01-13T17:58:23.788789+00:00
+Signals: git=yes, tests=yes, ci=no, readme=yes, last_commit=c931c11
+<!-- STATUS:END -->
+
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

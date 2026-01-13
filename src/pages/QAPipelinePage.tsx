@@ -293,6 +293,34 @@ export function QAPipelinePage() {
         </div>
       </div>
 
+      {/* CLI Instructions Banner */}
+      <div className="mb-6 bg-surface-primary border border-accent-500/30 rounded-lg p-4">
+        <h3 className="text-lg font-semibold text-accent-400 mb-2">Run Locally via CLI</h3>
+        <p className="text-text-secondary text-sm mb-3">
+          QA, Spec, and Recovery pipelines require local filesystem access. Use the <code className="bg-surface-elevated px-1.5 py-0.5 rounded text-accent-300">claude-dev</code> CLI for full functionality:
+        </p>
+        <div className="space-y-2 bg-surface-elevated rounded-lg p-3 font-mono text-sm">
+          <div className="flex items-start gap-2">
+            <span className="text-text-muted">#</span>
+            <span className="text-text-secondary">Run QA pipeline on a spec:</span>
+          </div>
+          <code className="text-accent-300 block pl-4">claude-dev qa --spec-dir ./specs/my-feature --project-dir .</code>
+          <div className="flex items-start gap-2 mt-3">
+            <span className="text-text-muted">#</span>
+            <span className="text-text-secondary">Generate spec from requirements:</span>
+          </div>
+          <code className="text-accent-300 block pl-4">claude-dev spec create --input requirements.md --output ./specs/</code>
+          <div className="flex items-start gap-2 mt-3">
+            <span className="text-text-muted">#</span>
+            <span className="text-text-secondary">Recovery from failed state:</span>
+          </div>
+          <code className="text-accent-300 block pl-4">claude-dev recovery status --spec-dir ./specs/my-feature</code>
+        </div>
+        <p className="text-text-muted text-xs mt-3">
+          Install: <code className="bg-surface-elevated px-1 py-0.5 rounded">pip install claude-dev-cli</code> (coming soon)
+        </p>
+      </div>
+
       {/* Error Banner */}
       {error && (
         <div className="mb-6">
