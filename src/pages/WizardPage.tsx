@@ -225,7 +225,7 @@ export function WizardPage() {
       setError(null);
       const response = await getWizardProjects();
       setProjects(response.projects || []);
-    } catch (err) {
+    } catch {
       setError(err instanceof Error ? err.message : 'Failed to fetch projects');
       // Demo data fallback
       setProjects([
@@ -257,7 +257,7 @@ export function WizardPage() {
       setProjects([newProject, ...projects]);
       setShowCreateModal(false);
       setActiveProjectId(newProject.id);
-    } catch (err) {
+    } catch {
       // Demo fallback
       const demoProject: WizardProject = {
         id: `demo-${Date.now()}`,

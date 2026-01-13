@@ -406,7 +406,8 @@ function SampleDataEditor({
   };
 
   const removeField = (key: string) => {
-    const { [key]: _, ...rest } = data;
+    const rest = { ...data };
+    delete rest[key];
     onChange(rest);
   };
 

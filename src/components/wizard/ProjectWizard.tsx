@@ -153,7 +153,7 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
       const data = await getWizardProject(projectId);
       setProject(data);
       setActiveStage(data.current_stage);
-    } catch (err) {
+  } catch {
       // Demo data fallback for development/testing
       const demoProject: WizardProject = {
         id: projectId,
@@ -212,7 +212,7 @@ export function ProjectWizard({ projectId, onClose, onComplete }: ProjectWizardP
       }
 
       return output;
-    } catch (err) {
+  } catch {
       setStageStates(prev => ({
         ...prev,
         [stage]: {

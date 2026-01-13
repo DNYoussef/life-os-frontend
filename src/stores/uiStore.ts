@@ -67,7 +67,7 @@ export const useKanbanStore = create<KanbanState>((set, get) => ({
       const tasks: Task[] = data.items || data;
       const columns = organizeTasksByColumn(tasks);
       set({ columns, isLoading: false });
-    } catch (error) {
+    } catch {
       // Use demo data on error (consistent with list view fallback)
       const demoTasks: Task[] = [
         { id: '1', name: 'Morning Brief', skill_name: 'cascade-orchestrator', cron_expression: '0 6 * * *', status: 'pending', kanban_status: 'todo', next_run_at: new Date().toISOString(), last_run_at: null, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },

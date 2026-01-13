@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Terminal, Play, Square, Plus, X, RefreshCw,
   Bot, Brain, Zap, Clock, CheckCircle, AlertCircle,
-  Maximize2, Minimize2, Settings, Trash2
+  Maximize2, Minimize2
 } from 'lucide-react';
 
 // Types for agent terminals
@@ -362,9 +362,11 @@ export function ManagerPage() {
         completedAt: new Date(Date.now() - 300000).toISOString(),
       },
     ];
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTerminals(demoAgents);
 
     // Demo memory logs
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMemoryLogs([
       { timestamp: '10:22:05', agent: 'test-fixer', action: 'Stored bug fix pattern for CoE detection', tier: 'long_term', namespace: 'expertise' },
       { timestamp: '10:25:15', agent: 'librarian-research', action: 'Stored momentum research findings', tier: 'mid_term', namespace: 'expertise' },

@@ -432,7 +432,7 @@ export function ExecuteStage({
       setError(null);
       const data = await getWizardTasks(projectId);
       setTasks(data);
-    } catch (err) {
+    } catch {
       setError(err instanceof Error ? err.message : 'Failed to load tasks');
       // Demo data
       setTasks([
@@ -507,7 +507,7 @@ export function ExecuteStage({
     try {
       await updateWizardTask(projectId, taskId, { status });
       setTasks(tasks.map((t) => (t.id === taskId ? { ...t, status } : t)));
-    } catch (err) {
+    } catch {
       // Optimistic update for demo
       setTasks(tasks.map((t) => (t.id === taskId ? { ...t, status } : t)));
     }
@@ -517,7 +517,7 @@ export function ExecuteStage({
     try {
       await updateWizardTask(projectId, taskId, updates);
       setTasks(tasks.map((t) => (t.id === taskId ? { ...t, ...updates } : t)));
-    } catch (err) {
+    } catch {
       // Optimistic update for demo
       setTasks(tasks.map((t) => (t.id === taskId ? { ...t, ...updates } : t)));
     }

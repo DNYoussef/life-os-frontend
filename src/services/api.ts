@@ -115,11 +115,12 @@ function transformAgent(backendAgent: BackendAgent): Agent {
   };
 }
 
-export async function getAgents(page = 1, pageSize = 50, category?: string, _status?: string): Promise<PaginatedResponse<Agent>> {
+export async function getAgents(page = 1, pageSize = 50, category?: string, status?: string): Promise<PaginatedResponse<Agent>> {
   // Backend uses skip/limit, not page/page_size
   const skip = (page - 1) * pageSize;
   const params = new URLSearchParams({ skip: String(skip), limit: String(pageSize) });
   if (category) params.append('category', category);
+  if (status) params.append('status', status);
 
   // Note: trailing slash is required by FastAPI
   const backendAgents: BackendAgent[] = await fetchApi(`/api/v1/agents/?${params}`);

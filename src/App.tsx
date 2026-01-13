@@ -73,6 +73,7 @@ function Navigation() {
   const location = useLocation();
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
+    { path: '/dashboard', label: 'Dashboard', icon: LayoutGrid },
     { path: '/calendar', label: 'Calendar', icon: Calendar },
     { path: '/notes', label: 'Notes', icon: StickyNote },
     { path: '/ideas', label: 'Ideas', icon: Lightbulb },
@@ -293,7 +294,8 @@ function AppContent() {
         <Navigation />
       </header>
       <Routes>
-        <Route path="/" element={<UnifiedDashboard />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/dashboard" element={<UnifiedDashboard />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/notes" element={<NotesPage />} />
         <Route path="/ideas" element={<IdeasPage />} />

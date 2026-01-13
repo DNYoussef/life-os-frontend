@@ -17,7 +17,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import {
   Bot, Brain, Cpu, Clock, GitBranch, Play, Save, Trash2, Workflow, Zap,
-  Database, MessageSquare, Download, FileAudio, FileText, Users, Sparkles,
+  Database, MessageSquare, Download, FileText, Users, Sparkles,
   PenTool, Search, Image, GitCommit, Rocket, Globe, Shield, Link, Webhook,
   RefreshCw, CheckCircle, AlertTriangle, Layers, BookOpen, Mic, ImagePlus,
   AudioLines, Server, Palette, Headphones, Volume2, Calendar, X
@@ -653,7 +653,7 @@ export function PipelineDesignerPage() {
       });
 
       if (response.ok) {
-        const result = await response.json();
+        await response.json();
         setShowScheduleModal(false);
         alert(`Pipeline scheduled successfully!\n\nCron: ${cronExpression}\nNext run will appear in Calendar.`);
       } else {
@@ -1113,11 +1113,12 @@ export function PipelineDesignerPage() {
           />
           <Panel position="top-right" className="flex gap-2">
             <button
-              onClick={() => alert(`Pipeline "${pipelineName}" would run!\nNodes: ${nodes.length}\nEdges: ${edges.length}`)}
-              className="flex items-center gap-2 px-4 py-2 bg-accent-600 hover:bg-accent-500 text-white rounded-lg font-medium transition-colors"
+              onClick={runPipeline}
+              disabled={isRunning}
+              className="flex items-center gap-2 px-4 py-2 bg-accent-600 hover:bg-accent-500 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Play size={16} />
-              Run
+              {isRunning ? 'Running...' : 'Run'}
             </button>
             <button
               onClick={() => setShowScheduleModal(true)}

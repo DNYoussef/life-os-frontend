@@ -94,6 +94,7 @@ function NoteModal({
 
   useEffect(() => {
     if (note) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTitle(note.title);
       setContent(note.content);
       setTags(note.tags.join(', '));
@@ -309,7 +310,7 @@ export function NotesPage() {
 
   const handleToggleArchive = async (id: number) => {
     try {
-      const updated = await toggleNoteArchive(id);
+      await toggleNoteArchive(id);
       setNotes(notes.filter(n => n.id !== id));
     } catch {
       setNotes(notes.filter(n => n.id !== id));

@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Plus, ChevronLeft, ChevronRight, Clock, MapPin,
+  ChevronLeft, ChevronRight, Clock, MapPin,
   Activity, Bot, Brain, Workflow, ExternalLink,
   Calendar as CalIcon, CheckSquare, RefreshCw
 } from 'lucide-react';

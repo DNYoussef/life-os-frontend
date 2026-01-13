@@ -139,6 +139,7 @@ function EditTaskModal({
   // Populate form when task changes
   useEffect(() => {
     if (task) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setName(task.name);
       setSkillName(task.skill_name);
       setCronExpression(task.cron_expression);
@@ -313,7 +314,7 @@ export function TasksPage() {
     try {
       const newTask = await createTask(data);
       setTasks([newTask, ...tasks]);
-    } catch (err) {
+    } catch {
       // Add mock task for demo
       const mockTask: Task = {
         id: String(Date.now()),
@@ -364,7 +365,7 @@ export function TasksPage() {
       updateTaskInStore(id, updated);
       setShowEditModal(false);
       setEditingTask(null);
-    } catch (err) {
+    } catch {
       // Optimistic update for demo mode
       const updates: Partial<Task> = {
         name: data.name,

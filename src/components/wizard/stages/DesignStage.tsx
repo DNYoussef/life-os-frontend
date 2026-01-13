@@ -61,7 +61,8 @@ function ColorPaletteEditor({
   };
 
   const removeColor = (key: string) => {
-    const { [key]: _, ...rest } = colors;
+    const rest = { ...colors };
+    delete rest[key];
     onChange(rest);
   };
 
@@ -185,7 +186,8 @@ function TypographyEditor({
   };
 
   const removeValue = (key: string) => {
-    const { [key]: _, ...rest } = typography;
+    const rest = { ...typography };
+    delete rest[key];
     onChange(rest);
   };
 

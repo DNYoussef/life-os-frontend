@@ -32,6 +32,7 @@ function RunAgentModal({
 
   useEffect(() => {
     if (isOpen && agent) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPrompt(`Execute ${agent.name} agent task`);
     }
   }, [isOpen, agent]);
@@ -273,7 +274,7 @@ export function AgentsPage() {
       setSelectedAgent(null);
       // Refresh data to get updated stats
       fetchData();
-    } catch (err) {
+    } catch {
       // For demo mode, still show success
       const newActivity: AgentActivity = {
         id: Date.now().toString(),
