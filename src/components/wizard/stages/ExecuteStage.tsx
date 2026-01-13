@@ -432,7 +432,7 @@ export function ExecuteStage({
       setError(null);
       const data = await getWizardTasks(projectId);
       setTasks(data);
-    } catch {
+    } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load tasks');
       // Demo data
       setTasks([

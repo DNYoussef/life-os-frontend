@@ -495,6 +495,15 @@ export function CalendarPage() {
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const today = new Date();
 
+  const handleSubmitEvent = (
+    data: CreateCalendarEventRequest | UpdateCalendarEventRequest
+  ) => {
+    if (editingEvent) {
+      return handleUpdateEvent(data as UpdateCalendarEventRequest);
+    }
+    return handleCreateEvent(data as CreateCalendarEventRequest);
+  };
+
   return (
     <div className="min-h-screen bg-surface-base text-text-primary p-6">
       {/* Header */}
@@ -576,7 +585,7 @@ export function CalendarPage() {
         event={editingEvent}
         selectedDate={selectedDate}
         onClose={() => { setShowModal(false); setEditingEvent(null); setSelectedDate(null); }}
-        onSubmit={editingEvent ? handleUpdateEvent : handleCreateEvent}
+        onSubmit={handleSubmitEvent}
         onDelete={handleDeleteEvent}
         isSubmitting={isSubmitting}
       />

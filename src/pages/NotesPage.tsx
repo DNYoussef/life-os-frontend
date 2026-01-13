@@ -299,6 +299,13 @@ export function NotesPage() {
     setNotes(notes.filter(n => n.id !== id));
   };
 
+  const handleSubmitNote = (data: CreateNoteRequest | UpdateNoteRequest) => {
+    if (editingNote) {
+      return handleUpdateNote(data as UpdateNoteRequest);
+    }
+    return handleCreateNote(data as CreateNoteRequest);
+  };
+
   const handleTogglePin = async (id: number) => {
     try {
       const updated = await toggleNotePin(id);
@@ -457,7 +464,7 @@ export function NotesPage() {
         isOpen={showModal}
         note={editingNote}
         onClose={() => { setShowModal(false); setEditingNote(null); }}
-        onSubmit={editingNote ? handleUpdateNote : handleCreateNote}
+        onSubmit={handleSubmitNote}
         isSubmitting={isSubmitting}
       />
     </div>

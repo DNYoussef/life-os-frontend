@@ -225,7 +225,7 @@ export function WizardPage() {
       setError(null);
       const response = await getWizardProjects();
       setProjects(response.projects || []);
-    } catch {
+    } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch projects');
       // Demo data fallback
       setProjects([

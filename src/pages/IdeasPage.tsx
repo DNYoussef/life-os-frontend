@@ -420,6 +420,13 @@ export function IdeasPage() {
     setIdeas(ideas.filter(i => i.id !== id));
   };
 
+  const handleSubmitIdea = (data: CreateIdeaRequest | UpdateIdeaRequest) => {
+    if (editingIdea) {
+      return handleUpdateIdea(data as UpdateIdeaRequest);
+    }
+    return handleCreateIdea(data as CreateIdeaRequest);
+  };
+
   const filteredIdeas = ideas.filter(idea =>
     idea.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     idea.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -497,7 +504,7 @@ export function IdeasPage() {
         isOpen={showModal}
         idea={editingIdea}
         onClose={() => { setShowModal(false); setEditingIdea(null); }}
-        onSubmit={editingIdea ? handleUpdateIdea : handleCreateIdea}
+        onSubmit={handleSubmitIdea}
         isSubmitting={isSubmitting}
       />
     </div>
