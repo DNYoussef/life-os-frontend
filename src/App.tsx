@@ -15,6 +15,9 @@ import { CalendarPage } from './pages/CalendarPage'
 import { MemoryPage } from './pages/MemoryPage'
 import { PipelineDesignerPage } from './pages/PipelineDesignerPage'
 import { ManagerPage } from './pages/ManagerPage'
+import { CapturePage } from './pages/CapturePage'
+import { TodayPage } from './pages/TodayPage'
+import { ReviewQueuePage } from './pages/ReviewQueuePage'
 import { SimpleAskAI } from './components/SimpleAskAI/SimpleAskAI'
 import { UnifiedDashboard } from './components/UnifiedDashboard'
 import {
@@ -34,6 +37,9 @@ import {
   Calendar,
   Brain,
   Workflow,
+  Mic,
+  Sun,
+  AlertTriangle,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -74,13 +80,16 @@ function Navigation() {
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
     { path: '/dashboard', label: 'Dashboard', icon: LayoutGrid },
+    { path: '/today', label: 'Today', icon: Sun },
     { path: '/calendar', label: 'Calendar', icon: Calendar },
+    { path: '/capture', label: 'Capture', icon: Mic },
     { path: '/notes', label: 'Notes', icon: StickyNote },
     { path: '/ideas', label: 'Ideas', icon: Lightbulb },
     { path: '/tasks', label: 'Tasks', icon: CheckSquare },
     { path: '/projects', label: 'Projects', icon: FolderKanban },
     { path: '/agents', label: 'Agents', icon: Bot },
     { path: '/memory', label: 'Memory', icon: Brain },
+    { path: '/review-queue', label: 'Review Queue', icon: AlertTriangle },
     { path: '/qa', label: 'QA', icon: ShieldCheck },
     { path: '/wizard', label: 'Wizard', icon: Wand2 },
     { path: '/pipelines', label: 'Pipelines', icon: Workflow },
@@ -296,6 +305,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/dashboard" element={<UnifiedDashboard />} />
+        <Route path="/today" element={<TodayPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/notes" element={<NotesPage />} />
         <Route path="/ideas" element={<IdeasPage />} />
@@ -303,10 +313,12 @@ function AppContent() {
         <Route path="/agents" element={<AgentsPage />} />
         <Route path="/memory" element={<MemoryPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/review-queue" element={<ReviewQueuePage />} />
         <Route path="/qa" element={<QAPipelinePage />} />
         <Route path="/wizard" element={<WizardPage />} />
         <Route path="/pipelines" element={<PipelineDesignerPage />} />
         <Route path="/manager" element={<ManagerPage />} />
+        <Route path="/capture" element={<CapturePage />} />
       </Routes>
       <footer className="footer">
         <p>Life OS Integration Project</p>
